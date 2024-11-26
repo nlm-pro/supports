@@ -1,0 +1,6 @@
+{
+  "ltex.additionalRules.motherTongue": "fr",
+  "ltex.additionalRules.enablePickyRules": true,
+  "ltex.completionEnabled": true,
+  "ltex.language": "fr"
+}
