@@ -67,6 +67,7 @@ fetch('https://jsonplaceholder.typicode.com/users')
 
 1. Créez un template HTML contenant une carte utilisateur avec un nom et une description.
 2. Utilisez JavaScript pour cloner ce template et l’insérer dans la page avec des données différentes pour chaque utilisateur (au moins 3).
+3. (_bonus_) ajoutez un bouton qui, au click, met à jour toutes les cartes utilisateurs pour afficher le nom de famille (dernier mot) plutôt que le nom complet
 
 ### Code de base
 
