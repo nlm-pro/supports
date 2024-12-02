@@ -19,8 +19,8 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
    1. Shadow DOM, et CSS, les fragments de documents.
    1. CSS : le besoin d'encapsulation.
    1. Custom Elements.
-   1. [**_EXERCICES_**](./exercices/EX01-standards.html)
-2. [StencilJS le compilateur de Web Component proposé par Ionic](./02-stenciljs.md)
+   1. [**_EXERCICES_**](./exercices/EX01-standards.md)
+2. StencilJS le compilateur de Web Component proposé par Ionic
    1. Présentation de Stencil
    1. Premiers pas avec les composants Stencil
    1. Propriétés, méthodes et gestion de l’état des composants
@@ -30,7 +30,7 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
    1. Service Workers
    1. Introduction à LIT Web Component Library, une bibliothèque simple qui permet de créer des composants Web légers et rapides
    1. [**_EXERCICES_**](./exercices/EX02-stencil.md)
-3. [Réutilisation des composants cross-frameworks](./03-interop.md)
+3. Réutilisation des composants cross-frameworks
    1. Développement de composants "cross-plateformes/cross-projet"
    1. Intégration avec Angular, React et VueJS
    1. Encapsuler son code Angular avec Angular Elements
