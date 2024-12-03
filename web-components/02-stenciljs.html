@@ -1,0 +1,1766 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Formation Professionnelle" />
+  <title>Introduction à StencilJS : créer des composants Web modernes</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Introduction à StencilJS : créer des composants Web
+modernes</h1>
+  <p class="author">
+Formation Professionnelle
+  </p>
+  <p class="date">2024 - v1.0.0</p>
+</div>
+<div id="copyright-et-licence" class="slide section level1">
+<h1>Copyright et Licence</h1>
+<p><strong>Auteur :</strong> Noël Macé<br />
+<strong>Année de création :</strong> 2024<br />
+<strong>Contact :</strong> contact@noelmace.com</p>
+<h2
+id="ce-support-de-formation-est-sous-licence-cc-by-nc-sa-4.0-international">Ce
+support de formation est sous licence <strong><a
+href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr">CC
+BY-NC-SA 4.0 International</a></strong></h2>
+<ul>
+<li><strong>Attribution (BY) :</strong> Vous devez explicitement
+attribuer le travail à l’auteur.</li>
+<li><strong>Pas d’utilisation commerciale (NC) :</strong> Vous ne pouvez
+pas utiliser ce matériel à des fins commerciales sans autorisation
+explicite de l’auteur.</li>
+<li><strong>Partage dans les mêmes conditions (SA) :</strong> Si vous
+modifiez ce travail, vous devez le redistribuer sous la même
+licence.</li>
+</ul>
+<h2 id="conditions-de-la-licence">Conditions de la licence</h2>
+<ul>
+<li>Vous pouvez partager, adapter, et distribuer ce travail à condition
+de respecter les termes mentionnés ci-dessus.</li>
+</ul>
+</div>
+<div id="votre-formateur" class="slide section level1">
+<h1>Votre formateur</h1>
+<h2 id="noël-macé">Noël Macé</h2>
+<ul>
+<li><p>Développeur / Architecte Senior Fullstack</p></li>
+<li><p>Consultant-Formateur expert en développement Web</p></li>
+<li><p><strong>Expérience :</strong></p>
+<ul>
+<li>Plus de 15 années dans l’informatique et l’enseignement</li>
+<li>Focus sur les évolutions des standards et pratiques web</li>
+<li>Auteur d’un livre sur les architectures web modernes</li>
+</ul></li>
+<li><p><strong>Motivations :</strong></p>
+<ul>
+<li>Partager des connaissances et encourager les bonnes pratiques de
+développement.</li>
+<li>Promouvoir les technologies ouvertes et respectueuses des
+utilisateurs.</li>
+</ul></li>
+<li><p><strong>Contact :</strong> contact@noelmace.com</p></li>
+</ul>
+</div>
+<div id="objectifs-de-la-formation" class="slide section level1">
+<h1>Objectifs de la formation</h1>
+<ul>
+<li>Comprendre les fondamentaux de <strong>StencilJS</strong>.</li>
+<li>Apprendre à créer des composants Web modernes et performants.</li>
+<li>Explorer les concepts avancés : gestion de l’état, interactions,
+routage, formulaires, et Service Workers.</li>
+<li>Comparer StencilJS avec d’autres outils et bibliothèques
+front-end.</li>
+</ul>
+</div>
+<div id="contexte-et-déroulement" class="slide section level1">
+<h1>Contexte et déroulement</h1>
+<ul>
+<li><p><strong>Audience :</strong> Développeurs front-end avec des
+notions de base en JavaScript et Web Components.</p></li>
+<li><p><strong>Structure :</strong></p>
+<ol style="list-style-type: decimal">
+<li>Présentation de Stencil.</li>
+<li>Premiers pas avec les composants Stencil.</li>
+<li>Propriétés, méthodes et gestion de l’état.</li>
+<li>Gestion des évènements et interactions utilisateur.</li>
+<li>Routage.</li>
+<li>Formulaires.</li>
+<li>Service Workers.</li>
+<li>Alternatives : tour d’horizon des outils front-end modernes.</li>
+</ol></li>
+<li><p><strong>Déroulement :</strong></p>
+<ul>
+<li>Présentations théoriques.</li>
+<li>Démonstrations pratiques.</li>
+<li>Exercices guidés.</li>
+<li>Discussions et Q/A.</li>
+</ul></li>
+</ul>
+</div>
+<div id="présentation-de-stencil" class="slide section level1">
+<h1>Présentation de Stencil</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="quest-ce-que-stenciljs">Qu’est-ce que StencilJS ?</h2>
+<ul>
+<li>Un compilateur moderne pour créer des <strong>Web
+Components</strong>.</li>
+<li>Conçu par <strong>Ionic Framework</strong>.</li>
+<li>Objectifs principaux :
+<ul>
+<li>Optimisation des performances.</li>
+<li>Facilité d’utilisation.</li>
+<li>Intégration dans n’importe quel projet ou framework (React, Angular,
+Vue, etc.).</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="fonctionnalités-clés">Fonctionnalités clés</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Base Web Components</strong> : créez des composants
+standard.</li>
+<li><strong>React-like Syntax</strong> : développeurs familiers avec
+React apprécieront sa syntaxe JSX.</li>
+<li><strong>Performance</strong> : Lazy Loading, réduction du bundle,
+DOM virtuel.</li>
+<li><strong>Interopérabilité</strong> : compatible avec tous les
+frameworks modernes.</li>
+<li><strong>Support TypeScript</strong> : robustesse grâce à TypeScript
+intégré.</li>
+</ol>
+</div>
+<div id="premiers-pas-avec-stencil" class="slide section level1">
+<h1>Premiers pas avec Stencil</h1>
+<h2 id="installation-et-configuration">Installation et
+configuration</h2>
+</div>
+<div class="slide section level1">
+
+<h2 id="prérequis">Prérequis</h2>
+<ul>
+<li>Node.js (version LTS recommandée).</li>
+<li>Un éditeur comme VS Code.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="créer-un-projet-stencil">Créer un projet Stencil**</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">npm</span> init stencil</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="structure-du-projet">Structure du projet</h2>
+<ul>
+<li><code>src/components/</code> : contient vos composants.</li>
+<li><code>stencil.config.ts</code> : configuration du projet.</li>
+</ul>
+</div>
+<div id="propriétés-méthodes-et-gestion-de-létat"
+class="slide section level1">
+<h1>Propriétés, méthodes et gestion de l’état</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="ajouter-des-propriétés-et-méthodes">Ajouter des propriétés et
+méthodes</h2>
+<ul>
+<li>Utilisez les <strong>decorators</strong> TypeScript pour définir des
+propriétés :</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>@<span class="fu">Prop</span>() title<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>@<span class="fu">State</span>() count<span class="op">:</span> <span class="dt">number</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="gestion-de-létat-interne">Gestion de l’état interne</h2>
+<ul>
+<li>Le décorateur <code>@State</code> est utilisé pour des variables
+locales et réactives.</li>
+<li>Exemple :</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>@<span class="fu">State</span>() likes<span class="op">:</span> <span class="dt">number</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">incrementLikes</span>() {</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="kw">this</span><span class="op">.</span><span class="at">likes</span> <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="gestion-des-évènements-et-interactions-utilisateur"
+class="slide section level1">
+<h1>Gestion des évènements et interactions utilisateur</h1>
+<h2 id="émettre-et-écouter-des-évènements">Émettre et écouter des
+évènements</h2>
+</div>
+<div class="slide section level1">
+
+<h3
+id="utilisez-le-décorateur-event-pour-émettre-des-évènements">Utilisez
+le décorateur <code>@Event()</code> pour émettre des évènements :</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>@<span class="fu">Event</span>() myEvent<span class="op">:</span> <span class="bu">EventEmitter</span><span class="op">&lt;</span><span class="dt">string</span><span class="op">&gt;;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3
+id="abonnez-vous-à-des-évènements-dans-vos-composants-ou-via-javascript-natif">Abonnez-vous
+à des évènements dans vos composants ou via JavaScript natif :</h3>
+<pre class="tsx"><code>&lt;my-component onMyEvent={(e) =&gt; console.log(e.detail)}&gt;&lt;/my-component&gt;</code></pre>
+</div>
+<div id="routage" class="slide section level1">
+<h1>Routage</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="pourquoi-un-routeur-dans-une-application">Pourquoi un routeur
+dans une application ?</h2>
+<ul>
+<li>Permet de gérer la navigation entre différentes pages ou vues.</li>
+<li>Nécessaire pour structurer les applications monopages (SPA).</li>
+<li>Facilite l’organisation et la lisibilité du code.</li>
+<li>Adapté à la programmation web orientée composants.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="histoire-de-stencilrouter">Histoire de <span
+class="citation">@stencil/router</span></h2>
+<ul>
+<li>Initialement créé par l’équipe de <strong>Ionic
+Framework</strong>.</li>
+<li>Inspiré des routeurs React et Angular.</li>
+<li>Léger et optimisé pour les Web Components.</li>
+<li>Utilisé dans les projets Ionic mais également indépendant du
+framework.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="installation-du-routeur-stencil">Installation du routeur
+Stencil</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="installez-le-package-via-npm">1. Installez le package via
+npm</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">npm</span> install @stencil/router</span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="importez-et-configurez-le-routeur-dans-votre-projet">2. Importez
+et configurez le routeur dans votre projet :</h3>
+<ul>
+<li>Ajoutez le module de routeur dans un composant principal
+(<code>app-root</code> par exemple).</li>
+<li>Configurez vos routes à l’aide de
+<code>&lt;stencil-router&gt;</code>.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-de-configuration-des-routes">Exemple de configuration
+des routes</h2>
+<pre class="tsx"><code>&lt;stencil-router&gt;
+  &lt;stencil-route url=&quot;/&quot; component=&quot;app-home&quot;&gt;&lt;/stencil-route&gt;
+  &lt;stencil-route url=&quot;/about&quot; component=&quot;app-about&quot;&gt;&lt;/stencil-route&gt;
+&lt;/stencil-router&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2
+id="fonctionnalités-de-base-définir-et-afficher-une-route">Fonctionnalités
+de base : Définir et afficher une route</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="fonctionnement">Fonctionnement</h3>
+<ol style="list-style-type: decimal">
+<li>Chaque <strong><code>stencil-route</code></strong> correspond à une
+URL spécifique.</li>
+<li>Le paramètre <code>component</code> indique le composant à
+charger.</li>
+<li>Le routeur utilise l’historique du navigateur pour changer de
+vue.</li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-simple">Exemple simple</h3>
+<pre class="tsx"><code>&lt;stencil-route url=&quot;/&quot; component=&quot;app-home&quot;&gt;&lt;/stencil-route&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h3 id="pièges-à-éviter">Pièges à éviter</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Routes non correspondantes :</strong></p>
+<ul>
+<li>Si aucune route ne correspond à l’URL actuelle, rien ne sera
+affiché.</li>
+<li>Utilisez une route par défaut avec <code>component</code> et
+<code>exact=false</code>.</li>
+</ul></li>
+<li><p><strong>Chargement conditionnel des composants :</strong></p>
+<ul>
+<li>Assurez-vous que chaque composant de route est défini avant d’être
+utilisé.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="fonctionnalités-avancées-navigation-dynamique">Fonctionnalités
+avancées : Navigation dynamique</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="utilisation-dun-lien-pour-naviguer">Utilisation d’un lien pour
+naviguer</h3>
+<p><code>&lt;stencil-route-link&gt;</code> permet de naviguer sans
+recharger la page.</p>
+<pre class="tsx"><code>&lt;stencil-route-link url=&quot;/about&quot;&gt;Aller à la page &quot;À propos&quot;&lt;/stencil-route-link&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h3 id="navigation-programmée-avec-javascript">Navigation programmée
+avec JavaScript</h3>
+<p>Vous pouvez également naviguer via le code en utilisant l’API du
+routeur.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode ts"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">import</span> { Router } <span class="im">from</span> <span class="st">&#39;@stencil/router&#39;</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>Router<span class="op">.</span><span class="fu">push</span>(<span class="st">&#39;/about&#39;</span>)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="gestion-des-paramètres-de-route">Gestion des paramètres de
+route</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="ajouter-des-paramètres-à-une-route">Ajouter des paramètres à une
+route</h3>
+<p>Les paramètres permettent de transmettre des données via l’URL.</p>
+<pre class="tsx"><code>&lt;stencil-route url=&quot;/user/:id&quot; component=&quot;user-profile&quot;&gt;&lt;/stencil-route&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h3 id="lire-les-paramètres-dans-un-composant">Lire les paramètres dans
+un composant</h3>
+<p>Vous pouvez accéder aux paramètres via <code>match.params</code>.</p>
+<pre class="ŧs"><code>@Prop() match: MatchResults;
+
+connectedCallback() {
+  console.log(this.match.params.id);
+}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="résumé">Résumé</h2>
+<ul>
+<li>Le routeur Stencil est simple, léger et conçu pour les Web
+Components.</li>
+<li>Fonctionnalités principales :
+<ol style="list-style-type: decimal">
+<li>Gestion des URL et navigation.</li>
+<li>Support des paramètres dynamiques.</li>
+<li>Navigation conditionnelle et programmée.</li>
+</ol></li>
+<li>Pièges courants :
+<ul>
+<li>Routes non correspondantes.</li>
+<li>Mauvaise gestion des composants dynamiques.</li>
+</ul></li>
+</ul>
+<p><strong>Questions avant de passer au prochain sujet ?</strong></p>
+</div>
+<div id="formulaires-avec-stenciljs" class="slide section level1">
+<h1>Formulaires avec StencilJS</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="pourquoi-les-formulaires-sont-importants">Pourquoi les
+formulaires sont importants ?</h2>
+<ul>
+<li>Permettent de collecter et traiter des données utilisateur.</li>
+<li>Utilisation fréquente dans les applications modernes
+(authentification, saisie de données).</li>
+<li>Enjeux :
+<ol style="list-style-type: decimal">
+<li>Gestion des champs et des événements associés (validation,
+soumission).</li>
+<li>Performance et accessibilité.</li>
+<li>Intégration avec des API ou un backend.</li>
+</ol></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="fonctionnalités-de-base">Fonctionnalités de base</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="points-essentiels">Points essentiels</h3>
+<ul>
+<li>Les formulaires utilisent les éléments natifs du DOM HTML.</li>
+<li>StencilJS facilite :
+<ul>
+<li>La gestion des événements (<code>onInput</code>,
+<code>onSubmit</code>, etc.).</li>
+<li>La liaison entre les champs de formulaire et les données de l’état
+(<code>@State</code>).</li>
+<li>La validation des entrées utilisateur.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-de-formulaire-simple">Exemple de formulaire simple</h3>
+<pre class="tsx"><code>&lt;form onSubmit={(e) =&gt; this.handleSubmit(e)}&gt;
+  &lt;input type=&quot;text&quot; placeholder=&quot;Nom&quot; onInput={(e) =&gt; this.handleNameInput(e)} /&gt;
+  &lt;button type=&quot;submit&quot;&gt;Envoyer&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="gestion-des-événements-des-champs-de-formulaire">Gestion des
+événements des champs de formulaire</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="principe">Principe</h3>
+<p>Utiliser les événements natifs pour réagir aux changements de valeur
+:</p>
+<ul>
+<li>Input</li>
+<li>Change</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="oninput"><code>onInput</code></h3>
+<p>Déclenché à chaque modification du champ :</p>
+<pre class="tsx"><code>handleNameInput(event: InputEvent) {
+  const input = event.target as HTMLInputElement;
+  this.name = input.value;
+  console.log(`Nom saisi : ${this.name}`);
+}</code></pre>
+<h3 id="onchange"><code>onChange</code></h3>
+<p>Déclenché lorsque la modification est terminée.</p>
+<!-- TODO: Exemple -->
+</div>
+<div class="slide section level1">
+
+<h3 id="gestion-des-valeurs-via-state">Gestion des valeurs via
+<code>@State</code></h3>
+<ul>
+<li>Les données des champs peuvent être stockées dans l’état local.</li>
+<li>Utilisez <code>@State</code> pour les rendre réactives.</li>
+</ul>
+<h3 id="exemple-avec-liaison-entre-champ-et-état">Exemple avec liaison
+entre champ et état</h3>
+<pre class="tsx"><code>@State() name: string = &#39;&#39;;
+
+render() {
+  return (
+    &lt;form&gt;
+      &lt;input type=&quot;text&quot; value={this.name} onInput={(e) =&gt; this.handleNameInput(e)} /&gt;
+      &lt;p&gt;Vous avez saisi : {this.name}&lt;/p&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="validation-des-champs-de-formulaire">Validation des champs de
+formulaire</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="ajouter-des-règles-de-validation-html">Ajouter des règles de
+validation HTML</h3>
+<ul>
+<li>Utilisez les attributs HTML natifs pour la validation :
+<ul>
+<li><code>required</code></li>
+<li><code>pattern</code></li>
+<li><code>min</code>, <code>max</code></li>
+<li><code>maxlength</code>, <code>minlength</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-de-validation-native">Exemple de validation native</h3>
+<pre class="tsx"><code>&lt;input type=&quot;email&quot; required placeholder=&quot;Entrez votre email&quot; /&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h3 id="validation-personnalisée-avec-stenciljs">Validation
+personnalisée avec StencilJS</h3>
+<pre class="tsx"><code>validateEmail(email: string): boolean {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return regex.test(email);
+}
+
+handleEmailInput(event: InputEvent) {
+  const email = (event.target as HTMLInputElement).value;
+  if (!this.validateEmail(email)) {
+    console.error(&#39;Email invalide&#39;);
+  }
+}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="soumission-de-formulaire">Soumission de formulaire</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="gestion-de-lévénement-onsubmit">Gestion de l’événement
+<code>onSubmit</code></h3>
+<ul>
+<li>Interceptez la soumission du formulaire avec
+<code>onSubmit</code>.</li>
+<li>Empêchez le comportement par défaut pour gérer la soumission
+manuellement.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple">Exemple</h3>
+<pre class="tsx"><code>handleSubmit(event: Event) {
+  event.preventDefault();
+  console.log(&#39;Formulaire soumis avec succès !&#39;);
+}</code></pre>
+<h3 id="intégration-avec-une-api">Intégration avec une API</h3>
+<p>Soumettez les données du formulaire à un backend via
+<code>fetch</code>.</p>
+<pre class="tsx"><code>async handleSubmit(event: Event) {
+  event.preventDefault();
+  const response = await fetch(&#39;https://example.com/api&#39;, {
+    method: &#39;POST&#39;,
+    headers: { &#39;Content-Type&#39;: &#39;application/json&#39; },
+    body: JSON.stringify({ name: this.name, email: this.email })
+  });
+  const result = await response.json();
+  console.log(&#39;Réponse API :&#39;, result);
+}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="accessibilité-des-formulaires">Accessibilité des
+formulaires</h2>
+<h3 id="bonnes-pratiques">Bonnes pratiques</h3>
+</div>
+<div class="slide section level1">
+
+<h4 id="utiliser-des-labels-associés-aux-champs">1. Utiliser des labels
+associés aux champs</h4>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Nom<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span> <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h4 id="gérer-les-erreurs">2. Gérer les erreurs</h4>
+<p>Fournissez des retours visuels (ex. : messages d’erreur, encadrés
+rouges).</p>
+<pre class="tsx"><code>@State() errorMessage: string = &#39;&#39;;
+
+render() {
+  return (
+    &lt;form&gt;
+      &lt;input type=&quot;email&quot; onInput={(e) =&gt; this.handleEmailInput(e)} /&gt;
+      {this.errorMessage &amp;&amp; &lt;p class=&quot;error&quot;&gt;{this.errorMessage}&lt;/p&gt;}
+    &lt;/form&gt;
+  );
+}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="résumé-du-chapitre-formulaires">Résumé du chapitre
+“Formulaires”</h2>
+<ul>
+<li><strong>Champs natifs et réactifs :</strong>
+<ul>
+<li>Utilisez les événements <code>onInput</code> et l’état local
+<code>@State</code>.</li>
+</ul></li>
+<li><strong>Validation :</strong>
+<ul>
+<li>Combinez validations natives et personnalisées.</li>
+</ul></li>
+<li><strong>Soumission et intégration :</strong>
+<ul>
+<li>Gérez <code>onSubmit</code> et utilisez <code>fetch</code> pour
+interagir avec des API.</li>
+</ul></li>
+<li><strong>Accessibilité :</strong>
+<ul>
+<li>Utilisez des labels et fournissez des retours d’erreur visuels.</li>
+</ul></li>
+</ul>
+<p><strong>Questions ou démonstrations spécifiques avant de continuer
+?</strong></p>
+</div>
+<div id="service-workers" class="slide section level1">
+<h1>Service Workers</h1>
+<blockquote>
+<p>Cf. ma conférence PRPL pour des compléments :</p>
+<ul>
+<li><a
+href="https://fullweb.dev/slides/wof1/BoW-PRPL-2019.html">support</a></li>
+<li><a
+href="https://fullweb.dev/fr/docs/conferences/prpl">archive</a></li>
+</ul>
+</blockquote>
+</div>
+<div class="slide section level1">
+
+<h2 id="définition">Définition</h2>
+<ul>
+<li>Les <strong>Service Workers</strong> sont des scripts qui
+s’exécutent en arrière-plan, indépendamment de la page web.</li>
+<li>Ils permettent de gérer des fonctionnalités avancées comme :
+<ol style="list-style-type: decimal">
+<li>La mise en cache des ressources.</li>
+<li>Les notifications push.</li>
+<li>La synchronisation en arrière-plan.</li>
+</ol></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages">Avantages</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Performance :</strong>
+<ul>
+<li>Les ressources sont chargées depuis le cache, accélérant les temps
+de chargement.</li>
+</ul></li>
+<li><strong>Expérience utilisateur :</strong>
+<ul>
+<li>Fonctionnement hors ligne grâce à la mise en cache.</li>
+</ul></li>
+<li><strong>Fiabilité :</strong>
+<ul>
+<li>Les ressources critiques peuvent être disponibles même en cas de
+perte de connexion.</li>
+</ul></li>
+<li><strong>Progressive Web Apps (PWA) :</strong>
+<ul>
+<li>Indispensables pour transformer une application en PWA.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="fonctionnement-1">Fonctionnement</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="cycle-de-vie">Cycle de vie</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Installation :</strong>
+<ul>
+<li>Enregistre le Service Worker dans le navigateur.</li>
+</ul></li>
+<li><strong>Activation :</strong>
+<ul>
+<li>Met en place le cache et les événements.</li>
+</ul></li>
+<li><strong>Interception des requêtes :</strong>
+<ul>
+<li>Permet de servir des ressources depuis le cache.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-1">Exemple</h3>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a># Exemple de cycle de vie d<span class="st">&#39;un Service Worker</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;install&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Service Worker installé.&#39;</span>)<span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;activate&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Service Worker activé.&#39;</span>)<span class="op">;</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;fetch&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Requête interceptée :&#39;</span><span class="op">,</span> <span class="bu">event</span><span class="op">.</span><span class="at">request</span><span class="op">.</span><span class="at">url</span>)<span class="op">;</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div id="construire-un-service-worker-pas-à-pas"
+class="slide section level1">
+<h1>Construire un Service Worker pas-à-pas</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-1-créer-un-service-worker-manuellement">Étape 1 : Créer un
+Service Worker manuellement</h2>
+<ol style="list-style-type: decimal">
+<li>Créez un fichier <code>service-worker.js</code> à la racine du
+projet.</li>
+<li>Configurez les événements <code>install</code>,
+<code>activate</code> et <code>fetch</code>.</li>
+</ol>
+<h3 id="exemple-complet">Exemple complet</h3>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a># Exemple de Service <span class="bu">Worker</span> minimal</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="kw">const</span> CACHE_NAME <span class="op">=</span> <span class="st">&#39;my-cache-v1&#39;</span><span class="op">;</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="kw">const</span> ASSETS <span class="op">=</span> [<span class="st">&#39;index.html&#39;</span><span class="op">,</span> <span class="st">&#39;styles.css&#39;</span><span class="op">,</span> <span class="st">&#39;app.js&#39;</span>]<span class="op">;</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;install&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">waitUntil</span>(</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>    caches<span class="op">.</span><span class="fu">open</span>(CACHE_NAME)<span class="op">.</span><span class="fu">then</span>((cache) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>      <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Caching des ressources.&#39;</span>)<span class="op">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>      <span class="cf">return</span> cache<span class="op">.</span><span class="fu">addAll</span>(ASSETS)<span class="op">;</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>    })</span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;activate&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">waitUntil</span>(</span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a>    caches<span class="op">.</span><span class="fu">keys</span>()<span class="op">.</span><span class="fu">then</span>((cacheNames) <span class="kw">=&gt;</span></span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a>      <span class="bu">Promise</span><span class="op">.</span><span class="fu">all</span>(</span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a>        cacheNames</span>
+<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a>          <span class="op">.</span><span class="fu">filter</span>((cacheName) <span class="kw">=&gt;</span> cacheName <span class="op">!==</span> CACHE_NAME)</span>
+<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a>          <span class="op">.</span><span class="fu">map</span>((cacheName) <span class="kw">=&gt;</span> caches<span class="op">.</span><span class="fu">delete</span>(cacheName))</span>
+<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a>      )</span>
+<span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a>    )</span>
+<span id="cb23-23"><a href="#cb23-23" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb23-24"><a href="#cb23-24" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb23-25"><a href="#cb23-25" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;fetch&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-27"><a href="#cb23-27" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">respondWith</span>(</span>
+<span id="cb23-28"><a href="#cb23-28" tabindex="-1"></a>    caches<span class="op">.</span><span class="fu">match</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)<span class="op">.</span><span class="fu">then</span>((response) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-29"><a href="#cb23-29" tabindex="-1"></a>      <span class="cf">return</span> response <span class="op">||</span> <span class="fu">fetch</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)<span class="op">;</span></span>
+<span id="cb23-30"><a href="#cb23-30" tabindex="-1"></a>    })</span>
+<span id="cb23-31"><a href="#cb23-31" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb23-32"><a href="#cb23-32" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-2-enregistrer-le-service-worker-dans-votre-projet">Étape 2
+: Enregistrer le Service Worker dans votre projet</h2>
+<p>Enregistrez le Service Worker dans votre application via
+<code>navigator.serviceWorker</code>:</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="cf">if</span> (<span class="st">&#39;serviceWorker&#39;</span> <span class="kw">in</span> <span class="bu">navigator</span>) {</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  <span class="bu">navigator</span><span class="op">.</span><span class="at">serviceWorker</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    <span class="op">.</span><span class="fu">register</span>(<span class="st">&#39;/service-worker.js&#39;</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    <span class="op">.</span><span class="fu">then</span>(() <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Service Worker enregistré.&#39;</span>))</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>    <span class="op">.</span><span class="fu">catch</span>((error) <span class="kw">=&gt;</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">&quot;Erreur lors de l&#39;enregistrement :&quot;</span><span class="op">,</span> error))<span class="op">;</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div
+id="utiliser-workbox-pour-simplifier-la-gestion-des-service-workers"
+class="slide section level1">
+<h1>Utiliser Workbox pour simplifier la gestion des Service Workers</h1>
+</div>
+<div class="slide section level1">
+
+<h2 id="pourquoi-workbox">Pourquoi Workbox ?</h2>
+<ul>
+<li><strong>Workbox</strong> est une bibliothèque de Google qui
+simplifie l’écriture et la gestion des Service Workers.</li>
+<li>Fonctionnalités clés :
+<ol style="list-style-type: decimal">
+<li>Prise en charge des stratégies de cache.</li>
+<li>Gestion simplifiée des ressources statiques et dynamiques.</li>
+<li>Génération automatique des fichiers de cache.</li>
+</ol></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-1-installer-workbox">Étape 1 : Installer Workbox</h2>
+<p>Installez Workbox dans votre projet avec npm :</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="ex">npm</span> install workbox-cli <span class="at">--save-dev</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-2-configurer-workbox">Étape 2 : Configurer Workbox</h2>
+<ol style="list-style-type: decimal">
+<li>Ajoutez un fichier de configuration <code>workbox-config.js</code> à
+la racine du projet.</li>
+<li>Définissez les ressources à mettre en cache.</li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a># Exemple de configuration Workbox</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="dt">globDirectory</span><span class="op">:</span> <span class="st">&#39;./&#39;</span><span class="op">,</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  <span class="dt">globPatterns</span><span class="op">:</span> [<span class="st">&#39;**/*.{html,js,css}&#39;</span>]<span class="op">,</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>  <span class="dt">swDest</span><span class="op">:</span> <span class="st">&#39;service-worker.js&#39;</span><span class="op">,</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>  <span class="dt">runtimeCaching</span><span class="op">:</span> [</span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>    {</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>      <span class="dt">urlPattern</span><span class="op">:</span> ({ url }) <span class="kw">=&gt;</span> url<span class="op">.</span><span class="at">origin</span> <span class="op">===</span> self<span class="op">.</span><span class="at">location</span><span class="op">.</span><span class="at">origin</span><span class="op">,</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>      <span class="dt">handler</span><span class="op">:</span> <span class="st">&#39;CacheFirst&#39;</span><span class="op">,</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>      <span class="dt">options</span><span class="op">:</span> {</span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>        <span class="dt">cacheName</span><span class="op">:</span> <span class="st">&#39;static-resources&#39;</span><span class="op">,</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>        <span class="dt">expiration</span><span class="op">:</span> {</span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>          <span class="dt">maxEntries</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-3-générer-le-service-worker-avec-workbox">Étape 3 :
+Générer le Service Worker avec Workbox</h2>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="ex">npx</span> workbox generateSW</span></code></pre></div>
+</div>
+<div id="pièges-courants" class="slide section level1">
+<h1>Pièges courants</h1>
+<ol style="list-style-type: decimal">
+<li><p><strong>Cache obsolète :</strong></p>
+<ul>
+<li>Les utilisateurs peuvent voir une ancienne version de votre
+application si le Service Worker n’est pas mis à jour correctement.</li>
+<li>Solution : invalidez les anciens caches lors de l’activation.</li>
+</ul></li>
+<li><p><strong>Erreurs silencieuses :</strong></p>
+<ul>
+<li>Le Service Worker peut échouer sans que vous le remarquiez.</li>
+<li>Solution : ajoutez des logs et surveillez les événements.</li>
+</ul></li>
+<li><p><strong>Support limité des navigateurs :</strong></p>
+<ul>
+<li>Les Service Workers ne fonctionnent pas sur les très vieux
+navigateurs.</li>
+<li>Solution : vérifiez la compatibilité avec
+<code>if ('serviceWorker' in navigator)</code>.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="stratégies">Stratégies</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="définition-1">Définition</h3>
+<p>Une stratégie réseau définit comment un Service Worker gère les
+requêtes :</p>
+<ol style="list-style-type: decimal">
+<li><strong>Prise en charge des ressources en ligne
+(online).</strong></li>
+<li><strong>Mise en cache des ressources (offline).</strong></li>
+<li><strong>Combinaison des deux.</strong></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h3 id="principales-stratégies">Principales stratégies</h3>
+<ol style="list-style-type: decimal">
+<li>Cache First (Cache prioritaire)</li>
+<li>Network First (Réseau prioritaire)</li>
+<li>Stale While Revalidate (<em>“Consomme et revalide” / “Sert puis met
+à jour”</em>) :</li>
+<li>Pre-caching (Pré-mise en cache)</li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h3 id="cache-first-cache-prioritaire">1. Cache First (Cache
+prioritaire)</h3>
+<ul>
+<li>Cherche d’abord la ressource dans le cache.</li>
+<li>Si elle n’existe pas, la télécharge depuis le réseau.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="pros-cons">Pros &amp; Cons</h3>
+<ul>
+<li><strong>Avantage :</strong>
+<ul>
+<li>Réduit la latence en évitant les requêtes réseau.</li>
+</ul></li>
+<li><strong>Inconvénient :</strong>
+<ul>
+<li>Les ressources peuvent devenir obsolètes.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-vanilla">Exemple Vanilla</h3>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;fetch&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">respondWith</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>    caches<span class="op">.</span><span class="fu">match</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)<span class="op">.</span><span class="fu">then</span>((response) <span class="kw">=&gt;</span> {</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>      <span class="cf">return</span> response <span class="op">||</span> <span class="fu">fetch</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)<span class="op">;</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>    })</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-workbox">Exemple Workbox</h3>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>workbox<span class="op">.</span><span class="at">routing</span><span class="op">.</span><span class="fu">registerRoute</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  ({ request }) <span class="kw">=&gt;</span> request<span class="op">.</span><span class="at">destination</span> <span class="op">===</span> <span class="st">&#39;script&#39;</span><span class="op">,</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="kw">new</span> workbox<span class="op">.</span><span class="at">strategies</span><span class="op">.</span><span class="fu">CacheFirst</span>({</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="dt">cacheName</span><span class="op">:</span> <span class="st">&#39;scripts-cache&#39;</span><span class="op">,</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>    <span class="dt">plugins</span><span class="op">:</span> [</span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>      <span class="kw">new</span> workbox<span class="op">.</span><span class="at">expiration</span><span class="op">.</span><span class="fu">ExpirationPlugin</span>({</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>        <span class="dt">maxEntries</span><span class="op">:</span> <span class="dv">50</span><span class="op">,</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>        <span class="dt">maxAgeSeconds</span><span class="op">:</span> <span class="dv">30</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span><span class="op">,</span> <span class="co">// 30 jours</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a>  })</span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="network-first-réseau-prioritaire">2. Network First (Réseau
+prioritaire)</h3>
+<ul>
+<li><strong>Avantage :</strong>
+<ul>
+<li>Retourne toujours les ressources les plus à jour (si le réseau est
+disponible).</li>
+</ul></li>
+<li><strong>Inconvénient :</strong>
+<ul>
+<li>Plus lent, dépend fortement du réseau.</li>
+</ul></li>
+</ul>
+<h3 id="exemple-vanilla-1">Exemple Vanilla</h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;fetch&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">respondWith</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>    <span class="fu">fetch</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>      <span class="op">.</span><span class="fu">then</span>((response) <span class="kw">=&gt;</span> {</span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>        <span class="cf">return</span> caches<span class="op">.</span><span class="fu">open</span>(<span class="st">&#39;dynamic-cache&#39;</span>)<span class="op">.</span><span class="fu">then</span>((cache) <span class="kw">=&gt;</span> {</span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>          cache<span class="op">.</span><span class="fu">put</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span><span class="op">,</span> response<span class="op">.</span><span class="fu">clone</span>())<span class="op">;</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a>          <span class="cf">return</span> response<span class="op">;</span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a>      })</span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a>      <span class="op">.</span><span class="fu">catch</span>(() <span class="kw">=&gt;</span> caches<span class="op">.</span><span class="fu">match</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>))</span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-workbox-1">Exemple Workbox</h3>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>workbox<span class="op">.</span><span class="at">routing</span><span class="op">.</span><span class="fu">registerRoute</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  ({ request }) <span class="kw">=&gt;</span> request<span class="op">.</span><span class="at">destination</span> <span class="op">===</span> <span class="st">&#39;document&#39;</span><span class="op">,</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="kw">new</span> workbox<span class="op">.</span><span class="at">strategies</span><span class="op">.</span><span class="fu">NetworkFirst</span>({</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>    <span class="dt">cacheName</span><span class="op">:</span> <span class="st">&#39;pages-cache&#39;</span><span class="op">,</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>    <span class="dt">plugins</span><span class="op">:</span> [</span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>      <span class="kw">new</span> workbox<span class="op">.</span><span class="at">expiration</span><span class="op">.</span><span class="fu">ExpirationPlugin</span>({</span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>        <span class="dt">maxEntries</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>        <span class="dt">maxAgeSeconds</span><span class="op">:</span> <span class="dv">7</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span><span class="op">,</span> <span class="co">// 7 jours</span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a>  })</span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="stale-while-revalidate">3. Stale While Revalidate</h3>
+<ul>
+<li><strong>Avantage :</strong>
+<ul>
+<li>Offre une expérience utilisateur rapide.</li>
+<li>Met à jour les ressources en arrière-plan.</li>
+</ul></li>
+<li><strong>Inconvénient :</strong>
+<ul>
+<li>Peut servir des données obsolètes.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-vanilla-2">Exemple Vanilla</h3>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;fetch&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">respondWith</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>    caches<span class="op">.</span><span class="fu">open</span>(<span class="st">&#39;dynamic-cache&#39;</span>)<span class="op">.</span><span class="fu">then</span>((cache) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>      <span class="cf">return</span> cache<span class="op">.</span><span class="fu">match</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)<span class="op">.</span><span class="fu">then</span>((response) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>        <span class="kw">const</span> fetchPromise <span class="op">=</span> <span class="fu">fetch</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span>)<span class="op">.</span><span class="fu">then</span>((networkResponse) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>          cache<span class="op">.</span><span class="fu">put</span>(<span class="bu">event</span><span class="op">.</span><span class="at">request</span><span class="op">,</span> networkResponse<span class="op">.</span><span class="fu">clone</span>())<span class="op">;</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a>          <span class="cf">return</span> networkResponse<span class="op">;</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>        <span class="cf">return</span> response <span class="op">||</span> fetchPromise<span class="op">;</span></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a>    })</span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-workbox-2">Exemple Workbox</h3>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>workbox<span class="op">.</span><span class="at">routing</span><span class="op">.</span><span class="fu">registerRoute</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  ({ request }) <span class="kw">=&gt;</span> request<span class="op">.</span><span class="at">destination</span> <span class="op">===</span> <span class="st">&#39;image&#39;</span><span class="op">,</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>  <span class="kw">new</span> workbox<span class="op">.</span><span class="at">strategies</span><span class="op">.</span><span class="fu">StaleWhileRevalidate</span>({</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>    <span class="dt">cacheName</span><span class="op">:</span> <span class="st">&#39;images-cache&#39;</span><span class="op">,</span></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>    <span class="dt">plugins</span><span class="op">:</span> [</span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>      <span class="kw">new</span> workbox<span class="op">.</span><span class="at">expiration</span><span class="op">.</span><span class="fu">ExpirationPlugin</span>({</span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a>        <span class="dt">maxEntries</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>        <span class="dt">maxAgeSeconds</span><span class="op">:</span> <span class="dv">30</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span><span class="op">,</span> <span class="co">// 30 jours</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a>  })</span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="pre-caching-pré-mise-en-cache">Pre-caching (Pré-mise en
+cache)</h3>
+<ul>
+<li><strong>Avantage :</strong>
+<ul>
+<li>Assure que les ressources critiques sont disponibles hors
+ligne.</li>
+</ul></li>
+<li><strong>Inconvénient :</strong>
+<ul>
+<li>Nécessite une liste prédéfinie de ressources.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-vanilla-3">Exemple Vanilla</h3>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>self<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;install&#39;</span><span class="op">,</span> (<span class="bu">event</span>) <span class="kw">=&gt;</span> {</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">waitUntil</span>(</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>    caches<span class="op">.</span><span class="fu">open</span>(<span class="st">&#39;precache&#39;</span>)<span class="op">.</span><span class="fu">then</span>((cache) <span class="kw">=&gt;</span> {</span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>      <span class="cf">return</span> cache<span class="op">.</span><span class="fu">addAll</span>([<span class="st">&#39;/index.html&#39;</span><span class="op">,</span> <span class="st">&#39;/styles.css&#39;</span><span class="op">,</span> <span class="st">&#39;/app.js&#39;</span>])<span class="op">;</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>    })</span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h3 id="exemple-workbox-3">Exemple Workbox</h3>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>workbox<span class="op">.</span><span class="at">precaching</span><span class="op">.</span><span class="fu">precacheAndRoute</span>([</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>  { <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;/index.html&#39;</span><span class="op">,</span> <span class="dt">revision</span><span class="op">:</span> <span class="st">&#39;123456&#39;</span> }<span class="op">,</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  { <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;/styles.css&#39;</span><span class="op">,</span> <span class="dt">revision</span><span class="op">:</span> <span class="st">&#39;123456&#39;</span> }<span class="op">,</span></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a>  { <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;/app.js&#39;</span><span class="op">,</span> <span class="dt">revision</span><span class="op">:</span> <span class="st">&#39;123456&#39;</span> }<span class="op">,</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>])<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="résumé-des-stratégies-réseau">Résumé des stratégies réseau</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Cache First :</strong></p>
+<ul>
+<li>Priorise le cache pour la vitesse.</li>
+<li>Utilisez-le pour les ressources rarement mises à jour (images,
+scripts).</li>
+</ul></li>
+<li><p><strong>Network First :</strong></p>
+<ul>
+<li>Priorise le réseau pour des données à jour.</li>
+<li>Utile pour des pages dynamiques.</li>
+</ul></li>
+<li><p><strong>Stale While Revalidate :</strong></p>
+<ul>
+<li>Combine rapidité et actualisation en arrière-plan.</li>
+<li>Adapté pour les données qui évoluent lentement.</li>
+</ul></li>
+<li><p><strong>Pre-caching :</strong></p>
+<ul>
+<li>Prérequis pour les Progressive Web Apps (PWA).</li>
+<li>Idéal pour des ressources critiques (index.html, CSS global).</li>
+</ul></li>
+</ol>
+<p><strong>Questions ou retours sur ces stratégies ?</strong></p>
+</div>
+<div id="résumé-du-chapitre-service-workers"
+class="slide section level1">
+<h1>Résumé du chapitre “Service Workers”</h1>
+<ol style="list-style-type: decimal">
+<li>Créer et enregistrer un Service Worker en vanilla js</li>
+<li>Gérer les événements <code>install</code>, <code>activate</code> et
+<code>fetch</code>.</li>
+<li>Introduction à Workbox
+<ul>
+<li>Simplifie la gestion du cache et les stratégies avancées.</li>
+<li>Génération automatique des fichiers.</li>
+</ul></li>
+<li>Stratégies
+<ol style="list-style-type: decimal">
+<li>Cache First</li>
+<li>Network First</li>
+<li>Stale While Revalidate</li>
+<li>Pre-caching</li>
+</ol></li>
+</ol>
+<p><strong>Questions ou clarifications avant de continuer ?</strong></p>
+</div>
+<div id="alternatives" class="slide section level1">
+<h1>Alternatives</h1>
+<ul>
+<li>Il n’existe pas d’outil de développement Web “ultime”.</li>
+<li>Bien que StencilJS soit un outil puissant pour créer des Web
+Components, il existe d’autres bibliothèques ou frameworks adaptés à des
+besoins variés.</li>
+<li>Comprendre leurs avantages et inconvénients permet de mieux choisir
+l’outil selon :
+<ol style="list-style-type: decimal">
+<li>La complexité du projet.</li>
+<li>Les besoins en performances.</li>
+<li>Les connaissances de l’équipe.</li>
+</ol></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="lit">Lit</h2>
+<ul>
+<li>Lit est une bibliothèque légère développée par Google pour créer des
+Web Components.</li>
+<li>Basée sur les standards natifs du DOM et des templates HTML.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-de-lit">Avantages de Lit</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Léger et rapide :</strong>
+<ul>
+<li>Taille de base de ~5KB.</li>
+<li>Syntaxe simple et claire.</li>
+</ul></li>
+<li><strong>Interopérabilité :</strong>
+<ul>
+<li>Fonctionne avec tous les frameworks modernes.</li>
+</ul></li>
+<li><strong>Réactivité intégrée :</strong>
+<ul>
+<li>Mise à jour efficace du DOM grâce à des propriétés réactives.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-avec-lit-composant-simple">Exemple avec Lit : Composant
+simple</h2>
+<ul>
+<li>Déclaration d’un composant avec <code>@customElement</code>.</li>
+<li>Utilisation des propriétés réactives avec
+<code>@property</code>.</li>
+</ul>
+<pre class="tsx"><code>import { LitElement, html, css } from &#39;lit&#39;;
+import { customElement, property } from &#39;lit/decorators.js&#39;;
+
+@customElement(&#39;my-component&#39;)
+export class MyComponent extends LitElement {
+  @property() name = &#39;World&#39;;
+
+  static styles = css`
+    p {
+      color: blue;
+    }
+  `;
+
+  render() {
+    return html`&lt;p&gt;Hello, ${this.name}!&lt;/p&gt;`;
+  }
+}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="svelte">Svelte</h2>
+<ul>
+<li>Framework innovant basé sur une approche de compilation.</li>
+<li>Contrairement à React ou Angular, Svelte génère du code JavaScript
+optimisé, sans virtual DOM.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-de-svelte">Avantages de Svelte</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Performance :</strong>
+<ul>
+<li>Les composants sont compilés en JavaScript pur.</li>
+</ul></li>
+<li><strong>Syntaxe intuitive :</strong>
+<ul>
+<li>Moins de boilerplate, code facile à lire et écrire.</li>
+</ul></li>
+<li><strong>Flexibilité :</strong>
+<ul>
+<li>Convient aussi bien pour des petits widgets que des applications
+complexes.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-avec-svelte-composant-simple">Exemple avec Svelte :
+Composant simple</h2>
+<ul>
+<li>Déclaration des données avec une syntaxe réactive.</li>
+<li>Affichage dynamique basé sur les données.</li>
+</ul>
+<pre class="tsx"><code>&lt;script&gt;
+  let name = &#39;World&#39;;
+&lt;/script&gt;
+
+&lt;style&gt;
+  p {
+    color: green;
+  }
+&lt;/style&gt;
+
+&lt;p&gt;Hello, {name}!&lt;/p&gt;
+&lt;input bind:value={name} placeholder=&quot;Votre nom&quot; /&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="solidjs">SolidJS</h2>
+<ul>
+<li>SolidJS est un framework moderne basé sur une <strong>approche
+réactive</strong> sans virtual DOM.</li>
+<li>Utilise une compilation optimisée pour transformer les composants en
+JavaScript natif.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-de-solidjs">Avantages de SolidJS</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Performance extrême :</strong>
+<ul>
+<li>Pas de virtual DOM, chaque changement est directement appliqué au
+DOM.</li>
+</ul></li>
+<li><strong>Syntaxe JSX :</strong>
+<ul>
+<li>Familiarité pour les développeurs habitués à React.</li>
+</ul></li>
+<li><strong>Interopérabilité :</strong>
+<ul>
+<li>Peut intégrer des Web Components natifs.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="compatibilité-avec-les-web-components">Compatibilité avec les
+Web Components</h2>
+<ul>
+<li><strong>Prise en charge directe :</strong>
+<ul>
+<li>Peut consommer des Web Components comme n’importe quel élément
+HTML.</li>
+<li>Possibilité d’exporter des composants en tant que Web
+Components.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-avec-solidjs-consommer-un-web-component">Exemple avec
+SolidJS : Consommer un Web Component</h2>
+<p>Intégration d’un Web Component standard dans SolidJS.</p>
+<pre class="tsx"><code>import { render } from &#39;solid-js/web&#39;;
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;my-component name=&quot;SolidJS&quot;&gt;&lt;/my-component&gt;
+    &lt;/div&gt;
+  );
+}
+
+render(() =&gt; &lt;App /&gt;, document.getElementById(&#39;root&#39;));</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="preact">Preact</h2>
+<ul>
+<li>Une alternative légère à React (~3KB), avec une API compatible.</li>
+<li>Recommandé pour des projets nécessitant une taille minimale.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-de-preact">Avantages de Preact</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Léger et rapide :</strong>
+<ul>
+<li>Taille très réduite, idéal pour les projets où la performance est
+critique.</li>
+</ul></li>
+<li><strong>Compatibilité React :</strong>
+<ul>
+<li>Peut réutiliser les bibliothèques et composants React
+existants.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="compatibilité-avec-les-web-components-1">Compatibilité avec les
+Web Components</h2>
+<ul>
+<li><strong>Interopérabilité moyenne :</strong>
+<ul>
+<li>Preact peut consommer des Web Components, mais nécessite parfois un
+wrapper pour la gestion des événements.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-avec-preact-utiliser-un-web-component">Exemple avec
+Preact : Utiliser un Web Component</h2>
+<p>Utilisation d’un Web Component natif dans une application Preact.</p>
+<pre class="tsx"><code>import { h, render } from &#39;preact&#39;;
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;my-component name=&quot;Preact&quot;&gt;&lt;/my-component&gt;
+    &lt;/div&gt;
+  );
+}
+
+render(&lt;App /&gt;, document.getElementById(&#39;root&#39;));</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="react-next.js-et-remix">React, Next.js et Remix</h2>
+<ul>
+<li><strong>Next.js</strong> et <strong>Remix</strong> sont des
+frameworks full-stack modernes basés sur React.</li>
+<li>Conçus pour le rendu côté serveur (SSR) et les performances
+globales.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-1">Avantages</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Rendu côté serveur :</strong>
+<ul>
+<li>Améliore le SEO et les performances initiales.</li>
+</ul></li>
+<li><strong>Routage intégré :</strong>
+<ul>
+<li>Gestion simplifiée des routes et des pages.</li>
+</ul></li>
+<li><strong>Écosystème React :</strong>
+<ul>
+<li>Compatibles avec les bibliothèques et Web Components React.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="compatibilité-avec-les-web-components-2">Compatibilité avec les
+Web Components</h2>
+<ul>
+<li><strong>Interopérabilité indirecte :</strong>
+<ul>
+<li>Nécessite des ajustements pour intégrer des Web Components
+natifs.</li>
+<li>React reste au cœur de l’interaction.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="angular">Angular</h2>
+<ul>
+<li>Framework complet pour des applications complexes.</li>
+<li>Conçu pour des projets d’entreprise avec des besoins
+structurés.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-de-angular">Avantages de Angular</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Architecture robuste :</strong>
+<ul>
+<li>Basé sur des modules et services.</li>
+</ul></li>
+<li><strong>Typescript natif :</strong>
+<ul>
+<li>Utilisé par défaut pour une meilleure maintenabilité.</li>
+</ul></li>
+<li><strong>Interopérabilité avec les Web Components :</strong>
+<ul>
+<li>Intègre facilement les Web Components via
+<code>CUSTOM_ELEMENTS_SCHEMA</code>.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-avec-angular-intégrer-un-web-component">Exemple avec
+Angular : Intégrer un Web Component</h2>
+<p>Déclaration d’un schéma pour consommer des Web Components.</p>
+<pre class="tsx"><code>import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from &#39;@angular/core&#39;;
+
+@NgModule({
+  declarations: [
+    /* vos composants */
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule {}</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="vue.js">Vue.js</h2>
+<ul>
+<li>Framework “progressif” pour le développement d’interfaces
+utilisateur.</li>
+<li>Connu pour sa simplicité et son efficacité.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="avantages-de-vue.js">Avantages de Vue.js</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Facilité d’apprentissage :</strong>
+<ul>
+<li>Syntaxe intuitive et bien documentée.</li>
+</ul></li>
+<li><strong>Écosystème riche :</strong>
+<ul>
+<li>Nombreuses extensions et outils communautaires.</li>
+</ul></li>
+<li><strong>Compatibilité avec les Web Components :</strong>
+<ul>
+<li>Peut consommer directement des Web Components natifs.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-avec-vue.js-utiliser-un-web-component">Exemple avec
+Vue.js : Utiliser un Web Component</h2>
+<p>Intégration d’un Web Component natif dans un projet Vue.</p>
+<pre class="tsx"><code>&lt;template&gt;
+  &lt;my-component name=&quot;Vue.js&quot;&gt;&lt;/my-component&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: &quot;App&quot;,
+};
+&lt;/script&gt;</code></pre>
+</div>
+<div class="slide section level1">
+
+<h2 id="synthèse">Synthèse</h2>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="14%" />
+<col width="17%" />
+<col width="49%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Framework/Librairie</th>
+<th>Prise en charge native</th>
+<th>Export de composants en WC</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>StencilJS</strong></td>
+<td>★★★★★</td>
+<td>★★★★★</td>
+<td>Conçu spécifiquement pour les Web Components.</td>
+</tr>
+<tr class="even">
+<td><strong>Lit</strong></td>
+<td>★★★★★</td>
+<td>★★★★★</td>
+<td>100% basé sur les standards du DOM, dont les Web Components.</td>
+</tr>
+<tr class="odd">
+<td><strong>Angular</strong></td>
+<td>★★★★☆</td>
+<td>★★★★★</td>
+<td>Intègre directement les Web Components depuis sa conception.</td>
+</tr>
+<tr class="even">
+<td><strong>Vue.js</strong></td>
+<td>★★★★★</td>
+<td>★★★★☆</td>
+<td>Excellente compatibilité.</td>
+</tr>
+<tr class="odd">
+<td><strong>Svelte</strong></td>
+<td>★★★★☆</td>
+<td>★★★★☆</td>
+<td>Approche unique de compilation.</td>
+</tr>
+<tr class="even">
+<td><strong>Preact</strong></td>
+<td>★★★★☆</td>
+<td>★★★★☆</td>
+<td>Bonne compatibilité avec des ajustements.</td>
+</tr>
+<tr class="odd">
+<td><strong>React / Next.js / Remix</strong></td>
+<td>★★★☆☆</td>
+<td>★★★☆☆</td>
+<td>Compatibilité tardive, peut nécessiter des wrappers complexes /
+laborieux</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide section level1">
+
+<h2 id="résumé-du-chapitre-alternatives">Résumé du chapitre
+“Alternatives”</h2>
+<ul>
+<li><strong>SolidJS</strong> et <strong>Lit</strong> offrent des
+performances exceptionnelles en se rapprochant au maximum des derniers
+standards et innovations</li>
+<li><strong>Angular et Vue.js</strong> ont une bonne intégration directe
+des Web Components, ayant dés le départ adopté une architecture orientée
+composant proche des standards</li>
+<li><strong>React, Next.js, et Remix</strong> sont puissants mais
+nécessitent des ajustements pour interagir avec les Web Components
+natifs (et les standards du web en général)</li>
+<li><strong>Preact</strong> est une bonne alternative minimaliste à
+React, idéale pour des projets à faible empreinte et des équipes
+orientées programmation réactive.</li>
+</ul>
+<p><strong>Questions ou points à approfondir ?</strong></p>
+</div>
+<div id="conclusion-de-la-formation-web-components-et-stenciljs"
+class="slide section level1">
+<h1>Conclusion de la formation : Web Components et StencilJS</h1>
+<h2 id="récapitulatif-des-notions-abordées">Récapitulatif des notions
+abordées</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="stenciljs">StencilJS</h3>
+<ul>
+<li>Création de composants modernes avec TypeScript et JSX.</li>
+<li>Optimisation pour les performances grâce au lazy loading et au DOM
+virtuel.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="fonctionnalités-avancées">Fonctionnalités avancées</h3>
+<ul>
+<li>Routage avec <code>@stencil/router</code>.</li>
+<li>Gestion des formulaires et validation.</li>
+<li>Service Workers</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="alternatives-1">Alternatives</h3>
+<p>Vue d’ensemble des outils comme Lit, Svelte, React, Angular, et leur
+compatibilité avec les Web Components natifs.</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="points-forts-des-web-components">Points forts des Web
+Components</h2>
+</div>
+<div class="slide section level1">
+
+<h3 id="pourquoi-continuer-à-les-utiliser">Pourquoi continuer à les
+utiliser ?</h3>
+<ul>
+<li><strong>Interopérabilité universelle :</strong>
+<ul>
+<li>Fonctionnent indépendamment du framework utilisé.</li>
+</ul></li>
+<li><strong>Encapsulation native :</strong>
+<ul>
+<li>Isolation des styles et des comportements.</li>
+</ul></li>
+<li><strong>Standardisation :</strong>
+<ul>
+<li>Fondés sur des standards ouverts reconnus par tous les navigateurs
+modernes.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="limites-et-solutions">Limites et solutions</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Courbe d’apprentissage :</strong></p>
+<ul>
+<li>Solution : s’appuyer sur des outils comme Stencil ou Lit pour
+simplifier la création de composants.</li>
+</ul></li>
+<li><p><strong>Support des navigateurs :</strong></p>
+<ul>
+<li>Les Web Components sont supportés dans les navigateurs modernes,
+mais certains anciens navigateurs nécessitent des polyfills.</li>
+</ul></li>
+<li><p><strong>Performance des applications massives :</strong></p>
+<ul>
+<li>Solution : utiliser des frameworks comme Svelte ou React pour
+optimiser les interactions complexes tout en utilisant des Web
+Components pour les éléments réutilisables.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="perspectives-et-bonnes-pratiques">Perspectives et bonnes
+pratiques</h2>
+<ol style="list-style-type: decimal">
+<li>Créez (ou non) votre propre bibliothèque</li>
+<li>Favorisez (ou non) les standards</li>
+<li>Collaborez (absolument) avec votre équipe</li>
+<li>Adoptez une approche modulaire</li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="ressources-complémentaires">Ressources complémentaires</h2>
+<ul>
+<li><p><strong>Documentation officielle :</strong></p>
+<ul>
+<li><a href="https://stenciljs.com">StencilJS</a></li>
+<li><a href="https://lit.dev">Lit</a></li>
+<li><a
+href="https://developer.mozilla.org/fr/docs/Web/Web_Components">MDN Web
+Components</a></li>
+</ul></li>
+<li><p><strong>Tutoriels pratiques :</strong></p>
+<ul>
+<li>Création de Web Components avec Stencil.</li>
+<li>Utilisation des Service Workers pour les PWA.</li>
+<li>Intégration de Web Components dans des frameworks modernes.</li>
+</ul></li>
+<li><p><strong>Outils recommandés :</strong></p>
+<ul>
+<li><a href="https://storybook.js.org">Storybook</a> : pour documenter
+et tester vos composants.</li>
+<li><a
+href="https://developers.google.com/web/tools/workbox">Workbox</a> :
+pour simplifier les Service Workers.</li>
+</ul></li>
+</ul>
+<h3 id="merci-pour-votre-attention">Merci pour votre attention !</h3>
+<p><strong>Questions ?</strong><br />
+N’hésitez pas à partager vos projets ou demander des clarifications.</p>
+</div>
+<div class="slide section level1">
+
+</div>
+</body>
+</html>
