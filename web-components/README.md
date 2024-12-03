@@ -47,3 +47,15 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
 - Retour d’expérience
 - Revue des best practices
 - Proposition d’architecture du code
+
+## Liens
+
+- [Nommer un élément personnalisé](https://fullweb.dev/fr/tools/ce-name)
+- [Mozilla Standards Positions](https://mozilla.github.io/standards-positions/)
+- [es6-string-html VS Code extension](https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html)
+- [web.dev - declarative shadow DOM](https://web.dev/articles/declarative-shadow-dom)
+- [WHATWG - HTML: The Living Standard, Edition for Web Developers](https://html.spec.whatwg.org/dev/)
+- [exemple HyperScript](https://codesandbox.io/p/sandbox/github/fullwebdev/fullwebdev/tree/master/demos/helpers/el-simple-counter)
+    - [sur GitHub](https://github.com/fullwebdev/fullwebdev/tree/master/demos/helpers)
+    - [code source du helper el](https://github.com/fullwebdev/fullwebdev/blob/master/packages/helpers/el/index.js)
+- [MDN Web docs - Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)

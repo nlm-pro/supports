@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class LifecycleElement extends HTMLElement {
+        constructor() {
+          super();
+          console.log('Element instancié');
+        }
+        connectedCallback() {
+          console.log('Element inséré dans le DOM');
+        }
+
+        disconnectedCallback() {
+          console.log('Element retiré du DOM');
+        }
+
+        static get observedAttributes() {
+          return ['data-example'];
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          console.log(`Attribut ${name} changé de ${oldValue} à ${newValue}`);
+        }
+      }
+
+      // Enregistrement du Custom Element
+      customElements.define('lifecycle-element', LifecycleElement);
+
+      // Exemple d'utilisation dans le DOM
+      const element = document.createElement('lifecycle-element');
+      document.body.appendChild(element);
+
+      // Modification d'un attribut
+      element.setAttribute('data-example', 'test-value');
+
+      // Suppression de l'élément
+      document.body.removeChild(element);
+    </script>
+  </body>
+</html>

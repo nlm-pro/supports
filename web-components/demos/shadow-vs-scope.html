@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Démo : shadow DOM</title>
+    <style>
+      .plop {
+        color: red;
+      }
+      #toto {
+        color: cyan;
+      }
+      #toto .plop {
+        color: black;
+      }
+      body {
+        color: green;
+      }
+      #component {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <host-element id="toto">
+      <template shadowrootmode="open">
+        <style>
+          .plop {
+            color: gray;
+          }
+        </style>
+        <h2>Light content</h2>
+        <p class="plop">plop</p>
+        <p class="foo">foo</p>
+      </template>
+    </host-element>
+    <div id="component">Component 2</div>
+    <script>
+      const component = document.getElementById('component');
+      component.attachShadow({ mode: 'open' });
+    </script>
+    <div class="pas-component plop">pas composant</div>
+
+  </body>
+</html>
