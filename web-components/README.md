@@ -19,8 +19,8 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
    1. Shadow DOM, et CSS, les fragments de documents.
    1. CSS : le besoin d'encapsulation.
    1. Custom Elements.
-   1. [**_EXERCICES_**](./exercices/EX01-standards.md)
-2. StencilJS le compilateur de Web Component proposé par Ionic
+   1. [**_EXERCICES_**](./exercices/EX01-standards.md) & [correction](./exercices/corrections/1-1.html)
+2. [StencilJS le compilateur de Web Component proposé par Ionic](./02-stenciljs.html)
    1. Présentation de Stencil
    1. Premiers pas avec les composants Stencil
    1. Propriétés, méthodes et gestion de l’état des composants
@@ -37,7 +37,7 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
    1. Créer des Web Components avec React
    1. Alléger son code React avec Preact
    1. L'intégration dans Vue.js
-   1. [**_EXERCICES_**](./exercices/EX03-interop_correction.md)
+   1. [**_EXERCICES_**](./exercices/EX03-interop.md)
 
 ### Conclusion
 
