@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 1.5</title>
+    <script>
+      class Card extends HTMLElement {
+        connectedCallback() {
+          this.attachShadow({ mode: 'open' });
+          this.shadowRoot.innerHTML = /* HTML */ `
+            <div class="card">
+              <h3><slot name="title" /></h3>
+              <slot name="content"
+            </div>
+          `;
+        }
+      }
+
+      customElements.define('my-card', Card);
+
+      class UserCardsList extends HTMLElement {
+        #users = [];
+        async #render(reload = false) {
+          try {
+            const res = await fetch('https://jsonplaceholder.typicode.com/users');
+            this.#users = await res.json();
+            const template =
+              this.#users.length > 0
+                ? this.#users.map(
+                    (user) => /* HTML */ `
+                      <my-card>
+                        <span slot="title">${user?.name}</span>
+                        <div slot="content">
+                          <p>Email : ${user?.email}</p>
+                          <p>Company : ${user?.company?.name}</p>
+                        </div>
+                      </my-card>
+                    `
+                  )
+                : null;
+            this.shadowRoot.innerHTML = template === null ? 'no user available' : template.join('');
+          } catch (err) {
+            this.shadowRoot.innerHTML = 'ERROR';
+            console.error(err);
+          }
+        }
+
+        connectedCallback() {
+          this.attachShadow({ mode: 'open' });
+          this.shadowRoot.innerHTML = 'Loading...';
+          this.#render(true);
+        }
+      }
+
+      customElements.define('user-list', UserCardsList);
+    </script>
+  </head>
+  <body>
+    <user-list id="list"></user-list>
+  </body>
+</html>
