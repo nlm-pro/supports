@@ -1,0 +1,967 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>03-interop</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div id="réutilisation-des-web-components-cross-frameworks"
+class="title-slide slide section level1">
+<h1>Réutilisation des Web Components cross-frameworks</h1>
+
+</div>
+<div id="objectifs-de-la-matinée" class="slide section level2">
+<h1>Objectifs de la matinée</h1>
+<ol style="list-style-type: decimal">
+<li>Comprendre comment développer des Web Components réutilisables dans
+différents projets et frameworks.</li>
+<li>Découvrir les méthodes pour intégrer des Web Components dans
+Angular, React, Vue.js, et d’autres environnements.</li>
+<li>Explorer comment encapsuler le code Angular avec Angular
+Elements.</li>
+<li>Créer et utiliser des Web Components avec React et Preact.</li>
+<li>Comprendre les opportunités et les limites des Web Components dans
+des applications modernes.</li>
+</ol>
+</div>
+<div id="développement-de-web-components-cross-plateformescross-projet"
+class="slide section level2">
+<h1>Développement de Web Components
+“cross-plateformes/cross-projet”</h1>
+<h3 id="pourquoi-développer-des-web-components-cross-projet">Pourquoi
+développer des Web Components “cross-projet” ?</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Réutilisabilité :</strong> Les Web Components permettent de
+partager des éléments UI entre projets sans dépendance à un framework
+spécifique.</li>
+<li><strong>Interopérabilité :</strong> Fonctionnent nativement dans
+tous les navigateurs modernes et peuvent être utilisés avec Angular,
+React, Vue.js, etc.</li>
+<li><strong>Standardisation :</strong> Utilisent les standards du DOM
+natif, garantissant la pérennité du code.</li>
+<li><strong>Indépendance des outils :</strong> Pas besoin de lier des
+frameworks ou bibliothèques spécifiques pour les utiliser.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="étapes-pour-développer-un-web-component-réutilisable">Étapes
+pour développer un Web Component réutilisable</h3>
+<ol style="list-style-type: decimal">
+<li>Créer un Web Component en suivant les normes des standards
+ouverts.</li>
+<li>S’assurer qu’il n’y a pas de dépendances spécifiques à un framework
+ou outil particulier.</li>
+<li>Tester le composant dans différents environnements pour garantir sa
+compatibilité.</li>
+<li>Documenter clairement les propriétés, événements et méthodes
+exposées.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dun-web-component-simple">Exemple d’un Web Component
+simple</h3>
+<p>Pour illustrer, nous allons créer un composant <code>my-alert</code>
+qui affiche un message et utilise une propriété personnalisée
+<code>message</code>.</p>
+<pre><code>import { Component, Prop } from &#39;@stencil/core&#39;;
+
+@Component({
+  tag: &#39;my-alert&#39;,
+  shadow: true,
+})
+export class MyAlert {
+  @Prop() message: string;
+
+  render() {
+    return &lt;div&gt;{this.message}&lt;/div&gt;;
+  }
+}</code></pre>
+</div>
+<div id="points-à-surveiller-lors-de-la-création-de-web-components"
+class="slide section level2">
+<h1>Points à surveiller lors de la création de Web Components</h1>
+<ol style="list-style-type: decimal">
+<li><strong>Isolation des styles :</strong> Utilisez le Shadow DOM pour
+éviter les conflits avec le reste de l’application.</li>
+<li><strong>Interopérabilité :</strong> Évitez les dépendances non
+standardisées (exemple : API spécifiques à un framework).</li>
+<li><strong>Compatibilité :</strong> Testez les composants dans des
+navigateurs variés et avec des frameworks populaires.</li>
+<li><strong>Accessibilité :</strong> Assurez-vous que les composants
+respectent les bonnes pratiques d’accessibilité (ARIA, clavier,
+etc.).</li>
+</ol>
+</div>
+<div id="documenter-un-web-component-avec-tsdoc"
+class="slide section level2">
+<h1>Documenter un Web Component avec TSDoc</h1>
+<h3 id="pourquoi-utiliser-tsdoc">Pourquoi utiliser TSDoc ?</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Clarté du code :</strong> Les développeurs comprennent
+facilement les propriétés, événements et méthodes des composants.</li>
+<li><strong>Standardisation :</strong> TSDoc est basé sur des normes
+bien établies pour la documentation TypeScript.</li>
+<li><strong>Génération automatique :</strong> Facilite la création de
+documentation HTML ou PDF à partir du code source.</li>
+</ol>
+<h3 id="exemple-de-documentation-avec-tsdoc">Exemple de documentation
+avec TSDoc</h3>
+<pre><code>/**
+ * Un composant d&#39;alerte personnalisable.
+ * @tag my-alert
+ */
+@Component({
+  tag: &#39;my-alert&#39;,
+  shadow: true,
+})
+export class MyAlert {
+  /**
+   * Le message à afficher dans l&#39;alerte.
+   */
+  @Prop() message: string;
+
+  /**
+   * Méthode pour réinitialiser l&#39;alerte.
+   * @returns {void}
+   */
+  reset(): void {
+    console.log(&#39;Alerte réinitialisée&#39;);
+  }
+}</code></pre>
+</div>
+<div id="introduction-à-storybook-pour-les-web-components"
+class="slide section level2">
+<h1>Introduction à Storybook pour les Web Components</h1>
+<h3 id="quest-ce-que-storybook">Qu’est-ce que Storybook ?</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Outil open-source :</strong> Storybook est un environnement
+de développement pour construire des composants UI de manière
+isolée.</li>
+<li><strong>Support natif des Web Components :</strong> Fonctionne avec
+les Web Components vanilla, sans dépendre d’un framework
+particulier.</li>
+<li><strong>Personnalisation interactive :</strong> Permet de tester
+différentes variantes des composants en modifiant leurs propriétés en
+temps réel.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="pourquoi-utiliser-storybook">Pourquoi utiliser Storybook ?</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Documentation interactive :</strong>
+<ul>
+<li>Génère des aperçus interactifs des composants.</li>
+<li>Utile pour partager une bibliothèque de composants avec une
+équipe.</li>
+</ul></li>
+<li><strong>Tests visuels :</strong>
+<ul>
+<li>Vérifiez rapidement les rendus et les interactions de vos
+composants.</li>
+</ul></li>
+<li><strong>Amélioration de la collaboration :</strong>
+<ul>
+<li>Permet aux designers et développeurs de travailler ensemble en
+visualisant les composants isolément.</li>
+</ul></li>
+</ol>
+</div>
+<div id="étapes-pour-utiliser-storybook-avec-les-web-components"
+class="slide section level2">
+<h1>Étapes pour utiliser Storybook avec les Web Components</h1>
+<ol style="list-style-type: decimal">
+<li><strong>Installation :</strong> Ajoutez Storybook à votre
+projet.</li>
+<li><strong>Configuration :</strong> Configurez le support des Web
+Components vanilla.</li>
+<li><strong>Création de stories :</strong> Créez des fichiers
+<code>*.stories.js</code> pour définir les cas d’utilisation.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="étape-1-installer-storybook">Étape 1 : Installer Storybook</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Installez Storybook pour les Web Components</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">npx</span> sb init <span class="at">--type</span> web_components</span></code></pre></div>
+</div>
+<div class="slide section level2">
+
+<h3 id="étape-2-configurer-le-projet">Étape 2 : Configurer le
+projet</h3>
+<ol style="list-style-type: decimal">
+<li>Storybook génère automatiquement un dossier
+<code>.storybook</code>.</li>
+<li>Modifiez <code>main.js</code> pour spécifier que vous utilisez des
+Web Components.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">// Fichier de configuration Storybook</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  stories<span class="op">:</span> [<span class="st">&#39;../src/**/*.stories.js&#39;</span>]<span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  addons<span class="op">:</span> []<span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  framework<span class="op">:</span> <span class="st">&#39;@storybook/web-components&#39;</span><span class="op">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level2">
+
+<h3 id="étape-3-créer-une-story-pour-un-web-component">Étape 3 : Créer
+une story pour un Web Component</h3>
+<ol style="list-style-type: decimal">
+<li>Les stories permettent de documenter et visualiser vos
+composants.</li>
+<li>Créez un fichier <code>my-alert.stories.js</code> pour le composant
+<code>my-alert</code>.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">// Exemple de story pour un Web Component</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> {</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  title<span class="op">:</span> <span class="st">&#39;MyAlert&#39;</span><span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> Default <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="vs">`</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="vs">  &lt;my-alert message=&quot;Ceci est une alerte.&quot;&gt;&lt;/my-alert&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="vs">`</span><span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level2">
+
+<h3 id="points-dattention-avec-storybook">Points d’attention avec
+Storybook</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Performances :</strong> Assurez-vous que vos composants sont
+optimisés pour éviter les ralentissements dans Storybook.</li>
+<li><strong>Interopérabilité :</strong> Testez vos composants dans
+Storybook avec différentes configurations de navigateurs pour garantir
+leur compatibilité.</li>
+<li><strong>Collaboration :</strong> Utilisez l’interface interactive
+pour recueillir des retours des membres de l’équipe (design, QA,
+etc.).</li>
+</ol>
+</div>
+<div id="présentation-des-outils-modern-web.dev"
+class="slide section level2">
+<h1>Présentation des outils modern-web.dev</h1>
+<h3 id="histoire-et-raison-dêtre">Histoire et raison d’être</h3>
+<ul>
+<li><strong>Création :</strong> modern-web.dev est une initiative
+open-source lancée pour répondre aux besoins des développeurs
+travaillant avec des standards modernes du Web.</li>
+<li><strong>Objectif :</strong> Proposer des outils simples, performants
+et compatibles avec les ES modules natifs, sans dépendances
+inutiles.</li>
+<li><strong>Philosophie :</strong> Faciliter le développement et les
+tests des applications web en exploitant au maximum les standards
+natifs.</li>
+</ul>
+</div>
+<div id="web-dev-server" class="slide section level2">
+<h1>Web Dev Server</h1>
+<h3 id="description">Description</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qu’est-ce que c’est ?</strong></p>
+<ul>
+<li>Un serveur de développement léger et rapide conçu pour les ES
+modules.</li>
+<li>Utilisé pour servir les fichiers directement au navigateur sans
+étape de bundling complexe.</li>
+</ul></li>
+<li><p><strong>Fonctionnalités clés :</strong></p>
+<ul>
+<li>Support des ES modules natifs.</li>
+<li>Reload à chaud pour une expérience de développement fluide.</li>
+<li>Fonctionne sans configuration pour les projets basés sur les
+standards modernes.</li>
+</ul></li>
+</ol>
+<h3 id="exemple-de-commande">Exemple de commande</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Installation de Web Dev Server</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="ex">npm</span> install @web/dev-server <span class="at">--save-dev</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># Démarrage du serveur</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="ex">npx</span> web-dev-server <span class="at">--open</span> <span class="at">--watch</span></span></code></pre></div>
+</div>
+<div id="testing-library" class="slide section level2">
+<h1>Testing Library</h1>
+<h3 id="description-1">Description</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qu’est-ce que c’est ?</strong></p>
+<ul>
+<li>Une bibliothèque conçue pour tester les Web Components et autres
+éléments natifs.</li>
+<li>Fournit des outils pour interagir avec le DOM et valider les
+comportements.</li>
+</ul></li>
+<li><p><strong>Pourquoi l’utiliser ?</strong></p>
+<ul>
+<li>Simplifie l’écriture de tests unitaires et fonctionnels pour les Web
+Components.</li>
+<li>Basé sur une approche centrée sur l’utilisateur, inspirée de
+<code>@testing-library/react</code>.</li>
+</ul></li>
+</ol>
+<h3 id="exemple-de-test">Exemple de test</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ts"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">// Exemple de test avec Testing Library</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="im">import</span> { fixture<span class="op">,</span> expect } <span class="im">from</span> <span class="st">&#39;@open-wc/testing&#39;</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">it</span>(<span class="st">&#39;affiche le message correct&#39;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="kw">const</span> el <span class="op">=</span> <span class="cf">await</span> <span class="fu">fixture</span>(<span class="st">&#39;&lt;my-alert message=&quot;Hello&quot;&gt;&lt;/my-alert&gt;&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="fu">expect</span>(el<span class="op">.</span><span class="at">message</span>)<span class="op">.</span><span class="at">to</span><span class="op">.</span><span class="fu">equal</span>(<span class="st">&#39;Hello&#39;</span>)<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+</div>
+<div id="dev-tools" class="slide section level2">
+<h1>Dev Tools</h1>
+<h3 id="description-2">Description</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qu’est-ce que c’est ?</strong></p>
+<ul>
+<li>Une collection d’outils pour le développement avec les standards
+Web.</li>
+<li>Inclut des fonctionnalités pour le debugging et la performance.</li>
+</ul></li>
+<li><p><strong>Fonctionnalités clés :</strong></p>
+<ul>
+<li>Aide au debugging des ES modules.</li>
+<li>Analyse des performances des applications basées sur les standards
+modernes.</li>
+</ul></li>
+</ol>
+</div>
+<div id="présentation-des-outils-open-wc.org"
+class="slide section level2">
+<h1>Présentation des outils open-wc.org</h1>
+<h3 id="histoire-et-raison-dêtre-1">Histoire et raison d’être</h3>
+<ul>
+<li><strong>Création :</strong> open-wc.org est une initiative de la
+communauté pour normaliser et simplifier la création de Web
+Components.</li>
+<li><strong>Objectif :</strong> Fournir des recommandations, des outils,
+et des bonnes pratiques pour les développeurs travaillant avec les Web
+Components.</li>
+<li><strong>Philosophie :</strong> Rendre les Web Components accessibles
+et faciles à adopter grâce à des modèles et des outils adaptés.</li>
+</ul>
+</div>
+<div id="starter-kit" class="slide section level2">
+<h1>Starter Kit</h1>
+<h3 id="description-3">Description</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qu’est-ce que c’est ?</strong></p>
+<ul>
+<li>Un modèle de projet prêt à l’emploi pour démarrer rapidement avec
+les Web Components.</li>
+<li>Basé sur des outils modernes comme Rollup et Web Dev Server.</li>
+</ul></li>
+<li><p><strong>Pourquoi l’utiliser ?</strong></p>
+<ul>
+<li>Fournit une structure de projet standardisée.</li>
+<li>Permet de démarrer rapidement sans configuration complexe.</li>
+</ul></li>
+</ol>
+<h3 id="exemple-dutilisation">Exemple d’utilisation</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Créez un nouveau projet avec le Starter Kit</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">npm</span> init @open-wc</span></code></pre></div>
+</div>
+<div id="linting-et-testing" class="slide section level2">
+<h1>Linting et Testing</h1>
+<h3 id="description-4">Description</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qu’est-ce que c’est ?</strong></p>
+<ul>
+<li>Des outils pour garantir la qualité du code et tester les Web
+Components.</li>
+<li>Inclut des configurations prêtes à l’emploi pour ESLint et Testing
+Library.</li>
+</ul></li>
+<li><p><strong>Pourquoi l’utiliser ?</strong></p>
+<ul>
+<li>Détecte les erreurs courantes dans les Web Components.</li>
+<li>Facilite l’intégration de tests dans les workflows CI/CD.</li>
+</ul></li>
+</ol>
+<h3 id="exemple-de-configuration-eslint">Exemple de configuration
+ESLint</h3>
+<pre><code>// Exemple de configuration ESLint
+module.exports = {
+  extends: [&#39;@open-wc/eslint-config&#39;],
+};</code></pre>
+</div>
+<div id="documentation" class="slide section level2">
+<h1>Documentation</h1>
+<h3 id="description-5">Description</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qu’est-ce que c’est ?</strong></p>
+<ul>
+<li>Des guides et tutoriels pour apprendre les bonnes pratiques des Web
+Components.</li>
+<li>Inclut des exemples détaillés pour différents cas
+d’utilisation.</li>
+</ul></li>
+<li><p><strong>Pourquoi l’utiliser ?</strong></p>
+<ul>
+<li>Idéal pour les développeurs débutants ou expérimentés souhaitant
+perfectionner leur maîtrise des Web Components.</li>
+<li>Fournit des solutions aux problèmes courants dans les projets basés
+sur les standards modernes.</li>
+</ul></li>
+</ol>
+</div>
+<div id="mauvaises-pratiques-dans-le-développement-de-web-components"
+class="slide section level2">
+<h1>Mauvaises pratiques dans le développement de Web Components</h1>
+<h3 id="isolation-des-styles">Isolation des styles</h3>
+<ul>
+<li><strong>Problème :</strong> Styles globaux affectant les Web
+Components ou styles internes fuyant vers le reste de
+l’application.</li>
+<li><strong>Solution :</strong> Utiliser le Shadow DOM pour encapsuler
+les styles.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3 id="interopérabilité-et-compatibilité">Interopérabilité et
+compatibilité</h3>
+<ul>
+<li><strong>Problème :</strong> Utilisation de dépendances non standard
+ou API incompatibles avec certains navigateurs.</li>
+<li><strong>Solution :</strong> S’en tenir aux standards ouverts et
+tester les composants avec des polyfills si nécessaire.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3 id="accessibilité">Accessibilité</h3>
+<ul>
+<li><strong>Problème :</strong> Absence de support pour la navigation au
+clavier ou les lecteurs d’écran.</li>
+<li><strong>Solution :</strong> Respecter les bonnes pratiques ARIA et
+tester les composants avec des outils d’accessibilité.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3
+id="intégration-dun-web-component-dans-un-projet-angular">Intégration
+d’un Web Component dans un projet Angular</h3>
+<h3 id="pourquoi-utiliser-des-web-components-avec-angular">Pourquoi
+utiliser des Web Components avec Angular ?</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Interopérabilité :</strong> Angular permet d’utiliser des
+Web Components comme n’importe quel élément HTML standard.</li>
+<li><strong>Réduction des dépendances :</strong> Permet d’introduire des
+fonctionnalités spécifiques sans ajouter de bibliothèques Angular
+supplémentaires.</li>
+<li><strong>Réutilisabilité :</strong> Les mêmes composants peuvent être
+utilisés dans d’autres projets ou frameworks.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="étapes-pour-intégrer-un-web-component-dans-angular">Étapes pour
+intégrer un Web Component dans Angular</h3>
+<ol style="list-style-type: decimal">
+<li>Ajouter le Web Component dans le projet Angular (copie des fichiers
+ou utilisation d’un package npm).</li>
+<li>Déclarer le <code>CUSTOM_ELEMENTS_SCHEMA</code> dans le module
+Angular pour autoriser les éléments non natifs.</li>
+<li>Ajouter le Web Component dans le HTML du composant Angular.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dintégration-dans-angular">Exemple d’intégration dans
+Angular</h3>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode ts"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">// Importer les schémas Angular pour les Web Components</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="im">import</span> { NgModule<span class="op">,</span> CUSTOM_ELEMENTS_SCHEMA } <span class="im">from</span> <span class="st">&#39;@angular/core&#39;</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="im">import</span> { BrowserModule } <span class="im">from</span> <span class="st">&#39;@angular/platform-browser&#39;</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="im">import</span> { AppComponent } <span class="im">from</span> <span class="st">&#39;./app.component&#39;</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>@<span class="fu">NgModule</span>({</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  declarations<span class="op">:</span> [AppComponent]<span class="op">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  imports<span class="op">:</span> [BrowserModule]<span class="op">,</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  schemas<span class="op">:</span> [CUSTOM_ELEMENTS_SCHEMA]<span class="op">,</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  bootstrap<span class="op">:</span> [AppComponent]<span class="op">,</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>})</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AppModule {}</span></code></pre></div>
+</div>
+<div class="slide section level2">
+
+<h3 id="explications">Explications</h3>
+<ul>
+<li><strong>CUSTOM_ELEMENTS_SCHEMA :</strong> Permet à Angular de
+reconnaître et d’utiliser les Web Components sans générer
+d’erreurs.</li>
+<li><strong>Bootstrap avec AppComponent :</strong> La structure
+classique d’une application Angular est préservée, même avec des Web
+Components.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3 id="points-dattention-lors-de-lintégration-dans-angular">Points
+d’attention lors de l’intégration dans Angular</h3>
+<ol style="list-style-type: decimal">
+<li>Vérifiez que les Web Components sont correctement chargés avant leur
+utilisation (via les scripts ou imports nécessaires).</li>
+<li>Assurez-vous que les événements personnalisés déclenchés par le
+composant sont bien capturés dans Angular (via <code>@Output()</code> ou
+les gestionnaires d’événements natifs).</li>
+</ol>
+</div>
+<div id="exporter-un-composant-stencil-pour-angular"
+class="slide section level2">
+<h1>Exporter un composant Stencil pour Angular</h1>
+<blockquote>
+<p>cf. <a href="https://stenciljs.com/docs/angular">la doc
+officielle</a></p>
+</blockquote>
+</div>
+<div id="intégration-dun-web-component-dans-un-projet-react"
+class="slide section level2">
+<h1>Intégration d’un Web Component dans un projet React</h1>
+</div>
+<div class="slide section level2">
+
+<h3 id="étapes-pour-intégrer-un-web-component-dans-react">Étapes pour
+intégrer un Web Component dans React</h3>
+<ol style="list-style-type: decimal">
+<li>Installer et importer le Web Component dans votre projet React.</li>
+<li>Utiliser le Web Component comme un élément HTML natif dans les
+composants React.</li>
+<li>Gérer les événements personnalisés et les propriétés du Web
+Component dans React.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dintégration-dans-react">Exemple d’intégration dans
+React</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode ts"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">// Exemple d&#39;utilisation d&#39;un Web Component dans React</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="im">import</span> React <span class="im">from</span> <span class="st">&#39;react&#39;</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="kw">function</span> <span class="fu">App</span>() {</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="cf">return</span> (</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="op">&lt;</span>div<span class="op">&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>      <span class="op">&lt;</span>my<span class="op">-</span>alert message<span class="op">=</span><span class="st">&quot;Hello, React!&quot;</span><span class="op">&gt;&lt;/</span>my<span class="op">-</span>alert<span class="op">&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>}</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> App<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level2">
+
+<h3 id="explications-1">Explications</h3>
+<ul>
+<li><strong>Utilisation de Web Components dans JSX :</strong> React
+permet l’utilisation d’un Web Component directement dans JSX comme s’il
+s’agissait d’un élément HTML.</li>
+<li><strong>Gestion des propriétés :</strong> Les propriétés sont
+transmises comme attributs dans JSX et sont gérées de manière réactive
+dans le Web Component.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3 id="points-dattention-lors-de-lintégration-dans-react">Points
+d’attention lors de l’intégration dans React</h3>
+<ol style="list-style-type: decimal">
+<li>Vérifiez que les Web Components sont chargés avant d’être utilisés
+dans React.</li>
+<li>Gérez les événements personnalisés à l’aide de
+<code>addEventListener()</code> dans React, car les Web Components
+peuvent utiliser des événements non traditionnels.</li>
+<li>Testez les Web Components pour garantir qu’ils n’interfèrent pas
+avec le système de gestion d’état ou le cycle de vie des composants
+React.</li>
+</ol>
+</div>
+<div
+id="intégration-dun-web-component-dans-un-projet-react-next.js-et-remix"
+class="slide section level2">
+<h1>Intégration d’un Web Component dans un projet React, Next.js et
+Remix</h1>
+<h3
+id="pourquoi-utiliser-des-web-components-avec-react-next.js-et-remix">Pourquoi
+utiliser des Web Components avec React, Next.js et Remix ?</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Web Components dans React</strong> :</p>
+<ul>
+<li>Utilisation traditionnelle des Web Components dans des applications
+React.</li>
+<li>Compatibilité native avec JSX.</li>
+</ul></li>
+<li><p><strong>Web Components dans Next.js et Remix</strong> :</p>
+<ul>
+<li>Ces frameworks offrent un rendu côté serveur (SSR) et un routage
+intégré, tout en permettant l’utilisation de composants Web pour une
+interopérabilité maximale.</li>
+<li>Les Web Components s’intègrent bien dans l’architecture de ces
+frameworks, particulièrement pour des applications modernes nécessitant
+du rendu statique ou dynamique.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3
+id="étapes-pour-intégrer-un-web-component-dans-next.js-ou-remix">Étapes
+pour intégrer un Web Component dans Next.js ou Remix</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Créer et publier un Web Component</strong> comme expliqué
+précédemment.</li>
+<li><strong>Installer et importer le Web Component</strong> dans votre
+projet Next.js ou Remix.</li>
+<li>Utilisez le Web Component dans les composants React comme un élément
+HTML natif.</li>
+<li>Assurez-vous que les Web Components sont chargés côté serveur (dans
+le cas de Next.js et Remix) pour éviter tout problème de SSR.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dintégration-dans-next.js">Exemple d’intégration dans
+Next.js</h3>
+<pre class="tsx"><code>// Importation du Web Component dans un projet Next.js
+import React from &#39;react&#39;;
+
+const HomePage = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;my-alert message=&quot;Hello from Next.js!&quot;&gt;&lt;/my-alert&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default HomePage;</code></pre>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dintégration-dans-remix">Exemple d’intégration dans
+Remix</h3>
+<pre class="tsx"><code>// Importation du Web Component dans Remix
+import { useEffect } from &#39;react&#39;;
+
+const HomePage = () =&gt; {
+  useEffect(() =&gt; {
+    // Assurez-vous que le Web Component est chargé avant utilisation
+    import(&#39;my-alert&#39;);
+  }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;my-alert message=&quot;Hello from Remix!&quot;&gt;&lt;/my-alert&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default HomePage;</code></pre>
+</div>
+<div class="slide section level2">
+
+<h3 id="explications-2">Explications</h3>
+<ul>
+<li>Next.js et Remix prennent en charge le rendu côté serveur. Lors de
+l’utilisation de Web Components dans ces frameworks, il est important de
+s’assurer qu’ils sont correctement rendus côté client après le SSR.</li>
+<li>L’importation dynamique des Web Components dans Remix (avec
+<code>useEffect</code>) ou Next.js permet de les charger uniquement côté
+client, évitant ainsi des problèmes de rendu côté serveur.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3
+id="points-dattention-lors-de-lintégration-dans-next.js-ou-remix">Points
+d’attention lors de l’intégration dans Next.js ou Remix</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Rendu côté serveur (SSR) :</strong> Testez vos Web
+Components pour garantir qu’ils sont correctement gérés lors du SSR,
+notamment en vérifiant qu’ils sont chargés après le rendu côté
+client.</li>
+<li><strong>Importation dynamique :</strong> Utilisez
+<code>React.lazy()</code> ou <code>useEffect()</code> pour importer
+dynamiquement vos Web Components dans Next.js ou Remix, afin de gérer
+leur chargement côté client.</li>
+<li><strong>Optimisation des performances :</strong> Les Web Components
+peuvent être lourds si mal optimisés, assurez-vous de ne charger que ce
+qui est nécessaire et d’éviter le double chargement dans les deux
+environnements (SSR et client).</li>
+</ol>
+</div>
+<div id="exporter-un-composant-stencil-pour-react"
+class="slide section level2">
+<h1>Exporter un composant Stencil pour React</h1>
+<blockquote>
+<p>cf. <a href="https://stenciljs.com/docs/react">la doc
+officielle</a></p>
+</blockquote>
+</div>
+<div id="web-components-et-react-server-components"
+class="slide section level2">
+<h1>Web Components et React Server Components</h1>
+<h3 id="introduction-aux-react-server-components">Introduction aux React
+Server Components</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Qu’est-ce que c’est ?</strong>
+<ul>
+<li>Les React Server Components (RSC) permettent de rendre une partie de
+l’UI côté serveur tout en maintenant une expérience utilisateur réactive
+côté client.</li>
+</ul></li>
+<li><strong>Compatibilité avec les Web Components :</strong>
+<ul>
+<li>Les Web Components peuvent être intégrés dans des applications React
+Server Components pour fournir des éléments réutilisables et performants
+tout en réduisant le JavaScript envoyé au client.</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3
+id="intégration-dun-web-component-dans-react-server-components">Intégration
+d’un Web Component dans React Server Components</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Utilisation côté serveur :</strong> React Server Components
+peuvent rendre des Web Components côté serveur, mais ces derniers ne
+sont pas toujours compatibles avec le rendu serveur de React.</li>
+<li><strong>Assurez-vous que les Web Components sont correctement rendus
+et chargés côté client</strong>.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dutilisation-avec-react-server-components">Exemple
+d’utilisation avec React Server Components</h3>
+<pre><code>// Exemple d&#39;utilisation avec React Server Components
+import { Suspense } from &#39;react&#39;;
+
+export default function Page() {
+  return (
+    &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+      &lt;my-alert message=&quot;Rendered with React Server Components!&quot;&gt;&lt;/my-alert&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+</div>
+<div class="slide section level2">
+
+<h3 id="explications-3">Explications</h3>
+<ul>
+<li><strong>Suspense et React Server Components :</strong> Le composant
+<code>Suspense</code> est utilisé pour gérer les éléments de l’UI qui
+sont chargés de manière asynchrone, comme les Web Components.</li>
+<li><strong>Chargement côté client et serveur :</strong> Assurez-vous
+que les Web Components sont rendus côté serveur sans perdre leur
+comportement interactif lorsqu’ils sont rendus côté client.</li>
+</ul>
+</div>
+<div id="intégration-dun-web-component-dans-un-projet-vue.js"
+class="slide section level2">
+<h1>Intégration d’un Web Component dans un projet Vue.js</h1>
+<h3 id="pourquoi-utiliser-des-web-components-avec-vue.js">Pourquoi
+utiliser des Web Components avec Vue.js ?</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Interopérabilité :</strong> Vue.js permet d’utiliser des Web
+Components comme n’importe quel autre élément HTML natif.</li>
+<li><strong>Réduction des dépendances :</strong> Permet d’introduire des
+fonctionnalités spécifiques sans ajouter de bibliothèques Vue.js
+supplémentaires.</li>
+<li><strong>Réutilisabilité :</strong> Les mêmes composants peuvent être
+utilisés dans d’autres projets ou frameworks.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="étapes-pour-intégrer-un-web-component-dans-vue.js">Étapes pour
+intégrer un Web Component dans Vue.js</h3>
+<ol style="list-style-type: decimal">
+<li>Installer et importer le Web Component dans votre projet
+Vue.js.</li>
+<li>Utiliser le Web Component comme un élément HTML dans vos composants
+Vue.js.</li>
+<li>Gérer les événements personnalisés et les propriétés du Web
+Component dans Vue.js.</li>
+<li>Tester le Web Component pour garantir qu’il fonctionne bien avec
+Vue.js (notamment en gérant les interactions avec le DOM et le cycle de
+vie des composants).</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+<h3 id="exemple-dintégration-dans-vue.js">Exemple d’intégration dans
+Vue.js</h3>
+<pre class="vue"><code>// Exemple d&#39;utilisation d&#39;un Web Component dans Vue.js
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;my-alert :message=&quot;&#39;Hello from Vue.js!&#39;&quot;&gt;&lt;/my-alert&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  mounted() {
+    // Vous pouvez importer dynamiquement le Web Component si nécessaire
+    import(&#39;my-alert&#39;);
+  },
+};
+&lt;/script&gt;</code></pre>
+</div>
+<div class="slide section level2">
+
+<h3 id="explications-4">Explications</h3>
+<ul>
+<li><strong>Utilisation dans le template Vue.js :</strong> Vous pouvez
+utiliser le Web Component comme n’importe quel autre élément HTML natif,
+en passant des propriétés via des attributs et en écoutant des
+événements personnalisés.</li>
+<li><strong>Importation dynamique :</strong> Dans l’exemple, le Web
+Component est importé dynamiquement dans la méthode
+<code>mounted()</code>, ce qui garantit qu’il est chargé une fois le
+composant Vue.js monté.</li>
+</ul>
+</div>
+<div class="slide section level2">
+
+<h3 id="points-dattention-lors-de-lintégration-dans-vue.js">Points
+d’attention lors de l’intégration dans Vue.js</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Gestion des événements :</strong> Vue.js utilise un système
+d’événements basé sur la gestion des props et des événements via des
+directives. Assurez-vous que vos événements personnalisés sont bien
+gérés en utilisant <code>addEventListener</code> si nécessaire.</li>
+<li><strong>Utilisation du cycle de vie de Vue.js :</strong> Lorsque
+vous travaillez avec des Web Components, il peut être nécessaire de
+gérer leur cycle de vie dans des hooks comme <code>mounted()</code> ou
+<code>updated()</code> pour s’assurer que les composants sont bien
+initialisés et actualisés.</li>
+<li><strong>Compatibilité avec les autres versions de Vue :</strong>
+Vérifiez la compatibilité de vos Web Components avec Vue 2.x et 3.x, car
+il peut y avoir des différences dans la gestion du DOM et des
+composants.</li>
+</ol>
+</div>
+<div id="exporter-un-composant-stencil-pour-vue.js"
+class="slide section level2">
+<h1>Exporter un composant Stencil pour Vue.js</h1>
+<blockquote>
+<p>cf. <a href="https://stenciljs.com/docs/vue">la doc
+officielle</a></p>
+</blockquote>
+</div>
+<div id="conclusion-du-chapitre" class="slide section level2">
+<h1>Conclusion du chapitre</h1>
+<ol style="list-style-type: decimal">
+<li><strong>Web Components cross-frameworks :</strong> Les Web
+Components permettent de créer des éléments réutilisables dans des
+projets utilisant des frameworks modernes comme Angular, React, Vue.js,
+et d’autres.</li>
+<li><strong>Interopérabilité :</strong> Ils offrent une solution idéale
+pour intégrer des composants dans des projets existants sans dépendre
+d’un framework spécifique.</li>
+<li><strong>Meilleures pratiques :</strong> Assurez-vous de respecter
+les bonnes pratiques liées à l’<strong>isolation des styles</strong>,
+l’<strong>interopérabilité</strong>, et l’<strong>accessibilité</strong>
+pour garantir une expérience optimale et une maintenance facile.</li>
+</ol>
+</div>
+<div class="slide section level2">
+
+</div>
+</body>
+</html>

@@ -30,7 +30,7 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
    1. Service Workers
    1. Introduction à LIT Web Component Library, une bibliothèque simple qui permet de créer des composants Web légers et rapides
    1. [**_EXERCICES_**](./exercices/EX02-stencil.md)
-3. Réutilisation des composants cross-frameworks
+3. [Réutilisation des composants cross-frameworks](./03-interop.html)
    1. Développement de composants "cross-plateformes/cross-projet"
    1. Intégration avec Angular, React et VueJS
    1. Encapsuler son code Angular avec Angular Elements
