@@ -1,15 +1,23 @@
-# Création et intégration de web components pour applications mobile et multi-plateformes
+# \[Web Components 101\] : Introduction aux web components
 
-## Objectifs
+[:teacher: supports de présentation](./presentation.html)
 
-En fin de cours, l'élève doit avoir atteint les objectifs suivants :
+## Plan
 
-- Comprendre les Web Components
-- Comprendre comment utiliser Stenciljs pour générer des composants Web et des applications Web progressives (PWA)
-- Mettre en œuvre les applications multi-plateforme
-- Intégration avec Angular, React et VueJS.
-- L’intégration mobile dans le développement des Web Components
+1. La norme des Web Components
+1. Rappels DOM & AJAX
+1. Template HTML à chargement différé
+1. Shadow DOM, et CSS, les fragments de documents
+1. CSS : le besoin d'encapsulation
+1. Custom Elements
+1. _TBD_
+   1. Outils
+      1. _Introduction à Lit_
+      1. _Introduction à Stencil_
+      1. _Introduction à Svelte_
+   1. Design Systems & UI Components Libraries
 
+<<<<<<< Updated upstream
 ## Programme de la formation
 
 1. [Web Component : créer des composants Web autonomes et réutilisables](./01-standards.html)
@@ -40,15 +48,21 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
    1. [**_EXERCICES_**](./exercices/EX03-interop.md)
 
 ### Conclusion
+=======
+### (extra) Audit / Architecture
+>>>>>>> Stashed changes
 
 > Analyse d’un cas concret dans le contexte de l'entreprise
 
-- Analyse « critique »
 - Retour d’expérience
 - Revue des best practices
-- Proposition d’architecture du code
+- Analyse critique
+- Proposition d’architecture
 
 ## Liens
+
+> Sont rassemblés dans cette section un ensemble de liens vers des ressources évoquées au cours de l'enseignement de ce module.
+> Hors contexte, certains liens peuvent sembler n'avoir aucune connection avec le sujet abordé en premier lieu.
 
 - [Nommer un élément personnalisé](https://fullweb.dev/fr/tools/ce-name)
 - [Mozilla Standards Positions](https://mozilla.github.io/standards-positions/)
@@ -56,6 +70,6 @@ En fin de cours, l'élève doit avoir atteint les objectifs suivants :
 - [web.dev - declarative shadow DOM](https://web.dev/articles/declarative-shadow-dom)
 - [WHATWG - HTML: The Living Standard, Edition for Web Developers](https://html.spec.whatwg.org/dev/)
 - [exemple HyperScript](https://codesandbox.io/p/sandbox/github/fullwebdev/fullwebdev/tree/master/demos/helpers/el-simple-counter)
-    - [sur GitHub](https://github.com/fullwebdev/fullwebdev/tree/master/demos/helpers)
-    - [code source du helper el](https://github.com/fullwebdev/fullwebdev/blob/master/packages/helpers/el/index.js)
+  - [sur GitHub](https://github.com/fullwebdev/fullwebdev/tree/master/demos/helpers)
+  - [code source du helper el](https://github.com/fullwebdev/fullwebdev/blob/master/packages/helpers/el/index.js)
 - [MDN Web docs - Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)

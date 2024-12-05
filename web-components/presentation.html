@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Formation Professionnelle" />
+  <title>Web Component : créer des composants Web autonomes et réutilisables</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Web Component : créer des composants Web autonomes
+et réutilisables</h1>
+  <p class="author">
+Formation Professionnelle
+  </p>
+  <p class="date">2024 - v1.0.0</p>
+</div>
+<div id="copyright-et-licence" class="slide section level1">
+<h1>Copyright et Licence</h1>
+<p><strong>Auteur :</strong> Noël Macé<br />
+<strong>Année de création :</strong> 2024 <strong>Contact :</strong>
+contact@noelmace.com</p>
+<h2
+id="ce-support-de-formation-est-sous-licence-cc-by-nc-sa-4.0-international">Ce
+support de formation est sous licence <strong><a
+href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr">CC
+BY-NC-SA 4.0 International</a></strong></h2>
+<ul>
+<li><strong>Attribution (BY) :</strong> Vous devez explicitement
+attribuer le travail à l’auteur.</li>
+<li><strong>Pas d’utilisation commerciale (NC) :</strong> Vous ne pouvez
+pas utiliser ce matériel à des fins commerciales sans autorisation
+explicite de l’auteur.</li>
+<li><strong>Partage dans les mêmes conditions (SA) :</strong> Si vous
+modifiez ce travail, vous devez le redistribuer sous la même
+licence.</li>
+</ul>
+<h2 id="conditions-de-la-licence">Conditions de la licence</h2>
+<ul>
+<li>Vous pouvez partager, adapter, et distribuer ce travail à condition
+de respecter les termes mentionnés ci-dessus.</li>
+</ul>
+</div>
+<div id="votre-formateur" class="slide section level1">
+<h1>Votre formateur</h1>
+<h2 id="noël-macé">Noël Macé</h2>
+<ul>
+<li><p>Développeur / Architecte Senior Fullstack</p></li>
+<li><p>Consultant-Formateur expert en développement Web</p></li>
+<li><p><strong>Expérience :</strong></p>
+<ul>
+<li>Plus de 15 années dans l’informatique et l’enseignement</li>
+<li>Grande diversité d’expérience (technologies, contexte et rôle)</li>
+<li>Focus sur les évolutions des standards et pratiques web</li>
+<li>nombreuses conférences</li>
+<li><a
+href="https://www.editions-eni.fr/livre/developpement-et-architecture-des-applications-web-modernes-retrouver-les-fondamentaux-9782409029523">livre
+complet</a> publié aux éditions ENI en 2021</li>
+</ul></li>
+<li><p><strong>Motivations :</strong></p>
+<ul>
+<li>Partager des connaissances et encourager les bonnes pratiques de
+développement.</li>
+<li>Promouvoir les technologies et approches de développement ouvertes,
+démocratiques et respectueuses des usagers</li>
+</ul></li>
+<li><p><strong>Contact :</strong> contact@noelmace.com</p></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="tour-de-table">Tour de table</h2>
+<ul>
+<li>Prénom</li>
+<li>Poste / métier</li>
+<li>Expérience du sujet abordé</li>
+<li>Attentes</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="règles-à-respecter">Règles à respecter</h2>
+<ol style="list-style-type: decimal">
+<li>Répondez à l’appel et/ou <strong>signez la feuille
+d’émargement</strong> pour chaque demi-journée</li>
+<li>En cas de retard, attendez la prochaine pause pour rejoindre la
+salle de cours afin de ne pas perturber la classe</li>
+<li>Durant une présentation magistrale :
+<ol style="list-style-type: decimal">
+<li>Levez la main et attendez d’être désigné par le formateur avant
+d’intervenir / poser une question</li>
+<li>Évitez toute discussion et bruit susceptible de perturber la
+classe</li>
+</ol></li>
+<li>Tout propos ou acte discriminant, violent ou irrespectueux envers
+toute personne impliquée dans la formation amènera à une exclusion
+immédiate et automatique du cours et sera reportée à l’organisme de
+formation</li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="objectifs-de-cette-formation">Objectifs de cette formation</h2>
+<ul>
+<li>Vous initier à l’univers des Web Components.</li>
+<li>Explorer leurs applications dans vos projets.</li>
+<li>Développer des composants robustes et interopérables.</li>
+</ul>
+</div>
+<div id="contexte-et-déroulement" class="slide section level1">
+<h1>Contexte et déroulement</h1>
+<ul>
+<li><strong>Audience :</strong> Développeurs ayant une connaissance de
+base en HTML, CSS, JavaScript.</li>
+<li><strong>Structure :</strong>
+<ol style="list-style-type: decimal">
+<li>La norme des Web Components.</li>
+<li>Rappels DOM &amp; AJAX.</li>
+<li>Template HTML à chargement différé.</li>
+<li>Shadow DOM et CSS, les fragments de documents.</li>
+<li>CSS : le besoin d’encapsulation.</li>
+<li>Custom Elements.</li>
+</ol></li>
+<li><strong>Déroulement :</strong>
+<ol style="list-style-type: decimal">
+<li>Présentations théoriques.</li>
+<li>Démonstrations.</li>
+<li>Discussions et Q/A.</li>
+<li>Exercices pratiques.</li>
+<li>Discussions et Q/A.</li>
+<li>GOTO 1</li>
+</ol></li>
+</ul>
+</div>
+<div id="la-norme-des-web-components" class="slide section level1">
+<h1>La norme des Web Components</h1>
+<h2 id="quest-ce-quun-web-component">Qu’est-ce qu’un Web Component
+?</h2>
+<ul>
+<li>Ensemble de standards du W3C pour créer des éléments HTML
+personnalisés.</li>
+<li>Réutilisables et autonomes.</li>
+<li>Indépendants des frameworks JavaScript.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="standards-des-web-components">Standards des Web Components</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Custom Elements</strong><br />
+Permet de définir des balises HTML personnalisées.</p></li>
+<li><p><strong>Shadow DOM</strong><br />
+Fournit un encapsulage des styles et du DOM.</p></li>
+<li><p><strong>HTML Templates</strong><br />
+Permet de créer des fragments HTML réutilisables.</p></li>
+<li><p><strong><em>HTML Imports</em></strong> <em>(obsolète)</em><br />
+<em>Charge des ressources HTML externes (non recommandé).</em></p></li>
+</ol>
+</div>
+<div id="rappels-dom-ajax" class="slide section level1">
+<h1>Rappels DOM &amp; AJAX</h1>
+<h2 id="document-object-model-dom">Document Object Model (DOM)</h2>
+<ul>
+<li><strong>DOM :</strong> Représentation arborescente des documents
+HTML.</li>
+<li>Permet d’accéder et de manipuler les éléments d’une page via
+JavaScript.</li>
+<li>Exemples :
+<ul>
+<li><code>document.querySelector()</code></li>
+<li><code>element.setAttribute()</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="ajax-asynchronous-javascript-and-xml">AJAX : Asynchronous
+JavaScript And XML</h2>
+<ul>
+<li><strong>AJAX :</strong> Technique pour charger des données
+dynamiquement sans recharger la page.</li>
+<li>Utilise des API comme :
+<ul>
+<li><code>XMLHttpRequest</code></li>
+<li><code>fetch()</code></li>
+</ul></li>
+<li>Exemples d’applications :
+<ul>
+<li>Chargement de contenu.</li>
+<li>Envoi de données à un serveur.</li>
+</ul></li>
+</ul>
+</div>
+<div id="template-html-à-chargement-différé"
+class="slide section level1">
+<h1>Template HTML à chargement différé</h1>
+<h2 id="le-rôle-des-templates-html">Le rôle des templates HTML</h2>
+<ul>
+<li>Contiennent du contenu HTML réutilisable.</li>
+<li>Utilisent la balise <code>&lt;template&gt;</code> :</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">template</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;my-template&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Bonjour, je suis un template !<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">template</span><span class="dt">&gt;</span></span></code></pre></div>
+</div>
+<div id="template-html-à-chargement-différé-1"
+class="slide section level1">
+<h1>Template HTML à chargement différé</h1>
+<h2 id="le-rôle-des-templates-html-1">Le rôle des templates HTML</h2>
+<ul>
+<li><p>Contiennent du contenu HTML réutilisable.</p></li>
+<li><p>Utilisent la balise <code>&lt;template&gt;</code> :</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">template</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;my-template&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Bonjour, je suis un template !<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">template</span><span class="dt">&gt;</span></span></code></pre></div></li>
+</ul>
+<h2 id="utilisation-des-templates">Utilisation des templates</h2>
+<ol style="list-style-type: decimal">
+<li><p>Sélectionner le template :</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="kw">const</span> template <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">&#39;my-template&#39;</span>)<span class="op">;</span></span></code></pre></div></li>
+<li><p>Cloner son contenu :</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">const</span> clone <span class="op">=</span> template<span class="op">.</span><span class="at">content</span><span class="op">.</span><span class="fu">cloneNode</span>(<span class="kw">true</span>)<span class="op">;</span></span></code></pre></div></li>
+<li><p>Ajouter au DOM :</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(clone)<span class="op">;</span></span></code></pre></div></li>
+</ol>
+</div>
+<div id="shadow-dom-et-css-encapsulation" class="slide section level1">
+<h1>Shadow DOM et CSS : Encapsulation</h1>
+<h2 id="le-shadow-dom-cest-quoi">Le Shadow DOM, c’est quoi ?</h2>
+<ul>
+<li><p>Propose un DOM encapsulé pour les composants.</p></li>
+<li><p>Les styles et le DOM interne ne fuient pas vers
+l’extérieur.</p></li>
+<li><p>Exemple d’utilisation :</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="kw">const</span> shadow <span class="op">=</span> element<span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>shadow<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`&lt;style&gt;p { color: red; }&lt;/style&gt;&lt;p&gt;Texte&lt;/p&gt;`</span><span class="op">;</span></span></code></pre></div></li>
+</ul>
+<h2 id="avantages-du-shadow-dom">Avantages du Shadow DOM</h2>
+<ul>
+<li>Encapsulation : Styles internes non affectés par les styles
+globaux.</li>
+<li>Isolation : Préserve l’intégrité des composants.</li>
+<li>Exemples pratiques :
+<ul>
+<li>Composants réutilisables.</li>
+<li>Widgets indépendants.</li>
+</ul></li>
+</ul>
+</div>
+<div id="css-le-besoin-dencapsulation" class="slide section level1">
+<h1>CSS : Le besoin d’encapsulation</h1>
+<h2 id="problème-des-styles-globaux">Problème des styles globaux</h2>
+<ul>
+<li>Les styles CSS affectent souvent tout le document.</li>
+<li>Risques :
+<ul>
+<li><strong>Conflits de styles</strong> entre composants.</li>
+<li><strong>Effets de bord</strong> imprévus sur d’autres parties de la
+page.</li>
+</ul></li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="solution-shadow-dom-scoped-styles">Solution : Shadow DOM +
+Scoped Styles</h2>
+<ul>
+<li>Le Shadow DOM encapsule les styles et isole les composants.</li>
+<li>Exemple pratique :</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">class</span> StyledButton <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">constructor</span>() {</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="kw">super</span>()<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="kw">const</span> shadow <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    shadow<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="vs">              &lt;style&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="vs">                  .btn {</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="vs">                      color: white;</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="vs">                      background-color: blue;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="vs">                      border: none;</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="vs">                      padding: 10px;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="vs">                      cursor: pointer;</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="vs">                  }</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="vs">                  .btn:hover {</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="vs">                      background-color: darkblue;</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="vs">                  }</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="vs">              &lt;/style&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="vs">              &lt;button class=&quot;btn&quot;&gt;Cliquez-moi&lt;/button&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="vs">          `</span><span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>  }</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>}</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;styled-button&#39;</span><span class="op">,</span> StyledButton)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="résultat-attendu">Résultat attendu</h2>
+<ul>
+<li>Encapsulation complète : Les styles du bouton ne sont pas affectés
+par ceux de la page principale.</li>
+<li>Portabilité : Les composants peuvent être utilisés sur différentes
+pages ou projets sans ajustements.</li>
+</ul>
+</div>
+<div id="custom-elements" class="slide section level1">
+<h1>Custom Elements</h1>
+<h2 id="quest-ce-quun-custom-element">Qu’est-ce qu’un Custom Element
+?</h2>
+<ul>
+<li>Permet de créer de nouvelles balises HTML personnalisées.</li>
+<li>Étend la classe <code>HTMLElement</code> avec un comportement et des
+styles propres.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="syntaxe-de-base">Syntaxe de base</h2>
+<ol style="list-style-type: decimal">
+<li><p>Définir une classe pour l’élément :</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">class</span> MyElement <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">constructor</span>() {</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="kw">super</span>()<span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">shadowRoot</span><span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`&lt;p&gt;Bonjour, Web Component !&lt;/p&gt;`</span><span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  }</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>}</span></code></pre></div></li>
+<li><p>Enregistrer l’élément :</p></li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;my-element&#39;</span><span class="op">,</span> MyElement)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-dutilisation">Exemple d’utilisation</h2>
+<p>Une fois défini, l’élément peut être utilisé dans une page HTML :</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">my-element</span><span class="dt">&gt;&lt;/</span><span class="kw">my-element</span><span class="dt">&gt;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="méthodes-du-cycle-de-vie">Méthodes du cycle de vie</h2>
+<ul>
+<li><code>connectedCallback</code> : Appelé lorsque l’élément est inséré
+dans le DOM.</li>
+<li><code>disconnectedCallback</code> : Appelé lorsque l’élément est
+retiré du DOM.</li>
+<li><code>attributeChangedCallback</code> : Appelé lorsqu’un attribut de
+l’élément change.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+</div>
+<div class="slide section level1">
+
+<h2 id="exemple-cycle-de-vie-en-action">Exemple : Cycle de vie en
+action</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">class</span> LifecycleElement <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">connectedCallback</span>() {</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Element inséré dans le DOM&#39;</span>)<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  }</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">disconnectedCallback</span>() {</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&#39;Element retiré du DOM&#39;</span>)<span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  }</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  <span class="kw">static</span> <span class="kw">get</span> <span class="fu">observedAttributes</span>() {</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">&#39;data-example&#39;</span>]<span class="op">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  }</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="fu">attributeChangedCallback</span>(name<span class="op">,</span> oldValue<span class="op">,</span> newValue) {</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Attribut </span><span class="sc">${</span>name<span class="sc">}</span><span class="vs"> changé de </span><span class="sc">${</span>oldValue<span class="sc">}</span><span class="vs"> à </span><span class="sc">${</span>newValue<span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>  }</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>}</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">// Enregistrement du Custom Element</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;lifecycle-element&#39;</span><span class="op">,</span> LifecycleElement)<span class="op">;</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">// Exemple d&#39;utilisation dans le DOM</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="kw">const</span> element <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;lifecycle-element&#39;</span>)<span class="op">;</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(element)<span class="op">;</span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">// Modification d&#39;un attribut</span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>element<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">&#39;data-example&#39;</span><span class="op">,</span> <span class="st">&#39;test-value&#39;</span>)<span class="op">;</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="co">// Suppression de l&#39;élément</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">removeChild</span>(element)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="résultat-attendu-1">Résultat attendu</h2>
+<ol style="list-style-type: decimal">
+<li>Lors de l’insertion de l’élément dans le DOM :
+<code>Element inséré dans le DOM</code></li>
+<li>Lors du changement d’attribut :
+<code>Attribut data-example changé de null à test-value</code></li>
+<li>Lors du retrait de l’élément du DOM :
+<code>Element retiré du DOM</code></li>
+</ol>
+</div>
+<div id="avantages-des-web-components" class="slide section level1">
+<h1>Avantages des Web Components</h1>
+<h2 id="pourquoi-utiliser-les-web-components">Pourquoi utiliser les Web
+Components ?</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Réutilisabilité :</strong></p>
+<ul>
+<li>Les composants peuvent être utilisés sur plusieurs projets sans
+modification.</li>
+<li>Exemples : boutons, cartes, modales.</li>
+</ul></li>
+<li><p><strong>Encapsulation :</strong></p>
+<ul>
+<li>Protection des styles et du comportement.</li>
+<li>Aucune interférence avec les styles globaux.</li>
+</ul></li>
+<li><p><strong>Interopérabilité :</strong></p>
+<ul>
+<li>Fonctionnent avec tous les frameworks JavaScript (React, Angular,
+Vue, etc.).</li>
+<li>Compatibles avec du JavaScript natif.</li>
+</ul></li>
+<li><p><strong>Maintenance facilitée :</strong></p>
+<ul>
+<li>Code plus modulaire.</li>
+<li>Séparation claire des responsabilités (HTML, CSS, JS).</li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="limites-actuelles">Limites actuelles</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Performance :</strong></p>
+<ul>
+<li>Le Shadow DOM peut ajouter une légère surcharge si utilisé
+massivement.</li>
+</ul></li>
+<li><p><strong>Compatibilité :</strong></p>
+<ul>
+<li>Nécessite des polyfills pour certains anciens navigateurs.</li>
+</ul></li>
+<li><p><strong>Complexité initiale :</strong></p>
+<ul>
+<li>Courbe d’apprentissage plus élevée pour les débutants.</li>
+</ul></li>
+</ol>
+</div>
+<div id="étape-pratique-créer-un-composant-simple"
+class="slide section level1">
+<h1>Étape pratique : Créer un composant simple</h1>
+<h2 id="objectif">Objectif</h2>
+<p>Créer un composant personnalisable pour afficher un message
+d’alerte.</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-1-définir-le-composant">Étape 1 : Définir le
+composant</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Code HTML :</strong></li>
+</ol>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">alert-box</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;success&quot;</span><span class="dt">&gt;</span> Opération réussie ! <span class="dt">&lt;/</span><span class="kw">alert-box</span><span class="dt">&gt;</span></span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Code JavaScript :</strong></li>
+</ol>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">class</span> AlertBox <span class="kw">extends</span> <span class="bu">HTMLElement</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">constructor</span>() {</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="kw">super</span>()<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="fu">attachShadow</span>({ <span class="dt">mode</span><span class="op">:</span> <span class="st">&#39;open&#39;</span> })<span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  }</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>  <span class="fu">connectedCallback</span>() {</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>    <span class="kw">const</span> type <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">&#39;type&#39;</span>) <span class="op">||</span> <span class="st">&#39;info&#39;</span><span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="kw">const</span> message <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">innerHTML</span><span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">shadowRoot</span><span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="vs">            &lt;style&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="vs">                .alert {</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="vs">                    padding: 10px;</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="vs">                    margin: 5px 0;</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="vs">                    border-radius: 4px;</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="vs">                }</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="vs">                .success { background-color: #d4edda; color: #155724; }</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="vs">                .error { background-color: #f8d7da; color: #721c24; }</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="vs">                .info { background-color: #d1ecf1; color: #0c5460; }</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="vs">            &lt;/style&gt;</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="vs">            &lt;div class=&quot;alert </span><span class="sc">${</span>type<span class="sc">}</span><span class="vs">&quot;&gt;</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="vs">                </span><span class="sc">${</span>message<span class="sc">}</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="vs">            &lt;/div&gt;</span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="vs">        `</span><span class="op">;</span></span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a>  }</span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a>}</span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>customElements<span class="op">.</span><span class="fu">define</span>(<span class="st">&#39;alert-box&#39;</span><span class="op">,</span> AlertBox)<span class="op">;</span></span></code></pre></div>
+</div>
+<div class="slide section level1">
+
+<h2 id="étape-2-tester-dans-le-navigateur">Étape 2 : Tester dans le
+navigateur</h2>
+<ol style="list-style-type: decimal">
+<li>Ajoutez le script dans une page HTML.</li>
+<li>Insérez une balise <code>&lt;alert-box&gt;</code> avec différents
+types (success, error, info).</li>
+<li>Observez le rendu et testez la personnalisation.</li>
+</ol>
+</div>
+<div id="web-components-et-frameworks-javascript"
+class="slide section level1">
+<h1>Web Components et frameworks JavaScript</h1>
+<h2 id="intégration-avec-des-frameworks-modernes">Intégration avec des
+frameworks modernes</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>React :</strong></p>
+<ul>
+<li><p>Utilisez un Custom Element comme une balise standard.</p></li>
+<li><p>Exemple :</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">function</span> <span class="fu">App</span>() {</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">&lt;</span>my<span class="op">-</span>element <span class="op">/&gt;;</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>}</span></code></pre></div></li>
+</ul></li>
+<li><p><strong>Vue.js :</strong></p>
+<ul>
+<li><p>Utilisez directement les Web Components dans les templates
+Vue.</p></li>
+<li><p>Exemple :</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">template</span><span class="dt">&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">my-element</span><span class="dt">&gt;&lt;/</span><span class="kw">my-element</span><span class="dt">&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">template</span><span class="dt">&gt;</span></span></code></pre></div></li>
+</ul></li>
+<li><p><strong>Angular :</strong></p>
+<ul>
+<li><p>Activez <code>schemas: [CUSTOM_ELEMENTS_SCHEMA]</code> dans le
+module Angular.</p></li>
+<li><p>Exemple :</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>@<span class="fu">NgModule</span>({</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>    declarations<span class="op">:</span> [<span class="op">...</span>]<span class="op">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    imports<span class="op">:</span> [<span class="op">...</span>]<span class="op">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    schemas<span class="op">:</span> [CUSTOM_ELEMENTS_SCHEMA]</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>})</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AppModule {}</span></code></pre></div></li>
+</ul></li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="bénéfices">Bénéfices</h2>
+<ul>
+<li>Les Web Components fonctionnent indépendamment du framework.</li>
+<li>Faciles à intégrer dans des applications existantes.</li>
+</ul>
+</div>
+<div id="avantages-et-limites-des-web-components"
+class="slide section level1">
+<h1>Avantages et limites des Web Components</h1>
+<h2 id="points-forts">Points forts</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Réutilisabilité :</strong> Partager des composants entre
+projets.</li>
+<li><strong>Interopérabilité :</strong> Fonctionnent avec ou sans
+framework.</li>
+<li><strong>Encapsulation :</strong> Protection des styles et
+comportement.</li>
+</ol>
+</div>
+<div class="slide section level1">
+
+<h2 id="limites">Limites</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Support des anciens navigateurs :</strong> Polyfills
+nécessaires.</li>
+<li><strong>Complexité initiale :</strong> Apprentissage des nouvelles
+API.</li>
+<li><strong>Performance :</strong> Shadow DOM peut entraîner une légère
+surcharge.</li>
+</ol>
+</div>
+<div id="perspectives" class="slide section level1">
+<h1>Perspectives</h1>
+<ul>
+<li><strong>Adoption croissante :</strong> Les Web Components gagnent en
+popularité grâce à leur simplicité et leur flexibilité.</li>
+<li><strong>Écosystème :</strong> Intégration dans des outils modernes
+comme Storybook ou des librairies spécialisées.</li>
+<li><strong>Standards en évolution :</strong> Les API continueront de
+s’améliorer avec le temps.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="rôle-des-développeurs">Rôle des développeurs</h2>
+<ul>
+<li>Encourager l’adoption des Web Components dans vos projets.</li>
+<li>Contribuer à l’écosystème en développant des composants open
+source.</li>
+<li>Continuer d’explorer les nouvelles fonctionnalités des standards
+W3C.</li>
+</ul>
+</div>
+<div id="rappel-des-sujets-abordés" class="slide section level1">
+<h1>Rappel des sujets abordés</h1>
+<h2 id="la-norme-des-web-components-1">1. La norme des Web
+Components</h2>
+<ul>
+<li>Les standards : <strong>Custom Elements</strong>, <strong>Shadow
+DOM</strong>, <strong>HTML Templates</strong>.</li>
+<li>Objectif : Créer des composants autonomes, réutilisables et
+encapsulés.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="concepts-fondamentaux">2. Concepts fondamentaux</h2>
+<ul>
+<li><strong>DOM &amp; AJAX :</strong> Comprendre le fonctionnement du
+DOM et la manipulation asynchrone des données.</li>
+<li><strong>Templates HTML :</strong> Créer et utiliser des fragments
+HTML réutilisables.</li>
+<li><strong>Shadow DOM :</strong> Encapsuler le DOM et les styles pour
+éviter les conflits.</li>
+<li><strong>Custom Elements :</strong> Étendre les fonctionnalités
+d’HTML avec des balises personnalisées.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="pratique-et-cas-dusage">3. Pratique et cas d’usage</h2>
+<ul>
+<li>Exemple d’un composant d’alerte avec styles encapsulés.</li>
+<li>Utilisation des Web Components avec des frameworks modernes comme
+React, Vue et Angular.</li>
+<li>Gestion du cycle de vie des Custom Elements.</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h3 id="mise-en-perspective">4. Mise en perspective</h3>
+<ul>
+<li>avantages et inconvénients</li>
+<li>perspectives</li>
+<li>rôle des développeurs</li>
+</ul>
+</div>
+<div class="slide section level1">
+
+<h2 id="questions">Questions ?</h2>
+<ul>
+<li>Des points nécessitent-ils plus d’explications ?</li>
+<li>Avez-vous des cas pratiques ou des projets où intégrer les Web
+Components ?</li>
+<li>Cette formation a-t-elle répondu à vos attentes ?</li>
+<li>Avez-vous des retours sur cette formation ?</li>
+</ul>
+</div>
+<div id="merci-pour-votre-attention" class="slide section level1">
+<h1>Merci pour votre attention</h1>
+<h2 id="noubliez-pas">N’OUBLIEZ PAS !!!</h2>
+<ul>
+<li>D’<strong>ENREGISTRER</strong> vos travaux</li>
+<li>De bien avoir <strong>SIGNÉ LA FEUILLE D’ÉMARGEMENT</strong> avant
+de partir</li>
+<li><em>(si applicable)</em> De <strong>COMPLÉTER LA FICHE
+D’ÉVALUATION</strong> qui vous a été remise</li>
+<li>De récapituler le cours dans votre tête ou parcourir vos notes avant
+d’aller dormir ce soir.</li>
+</ul>
+</div>
+</body>
+</html>
